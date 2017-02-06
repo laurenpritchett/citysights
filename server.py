@@ -15,17 +15,23 @@ app.secret_key = "ABC"
 
 app.jinja_env.undefined = StrictUndefined
 
+
 @app.route('/')
 def index():
     """Homepage."""
 
     return render_template("homepage.html")
 
+
 @app.route('/search-results')
 def search_city():
     """Return photo results from city search."""
 
-    pass
+    city_searched = request.args.get('city-search')
+    city_name = '%{}%'.format(city_searched)
+
+    return render_template("search-results.html", city_name=city_name)
+
 
 @app.route('/photo-details')
 def show_photo_and_location():

@@ -1,0 +1,25 @@
+1|Paris|48.86669293|2.333335326|France|FR|Ile-de-France
+2|Berlin|52.52181866|13.40154862|Germany|DE|Berlin
+3|New York|40.74997906,-73.98001693|United States of America|US|New York
+4|Los Angeles|33.98997825,-118.1799805|United States of America|US|California
+5|San Francisco|37.74000775,-122.4599777|United States of America|US|California
+6|Tokyo|35.68501691,139.7514074|Japan|JP|Tokyo
+7|Shanghai|31.21645245,121.4365047|China|CN|Shanghai
+8|Denpasar|-8.650028871,115.2199849|Indonesia|ID|Bali
+9|Seattle|47.57000205,-122.339985|United States of America|US|Washington
+10|Honolulu|21.30687644,-157.8579979|United States of America|US|Hawaii
+11|Phoenix|33.53997988,-112.0699917|United States of America|US|Arizona
+12|San Diego|32.82002382,-117.1799899|United States of America|US|California
+13|Dallas|32.82002382,-96.84001693|United States of America|US|Texas
+14|Miami|25.7876107,-80.22410608|United States of America|US|Florida
+15|Atlanta|33.83001385,-84.39994938|United States of America|US|Georgia
+16|Chicago|41.82999066,-87.75005497|United States of America|US|Illinois
+17|Denver|39.73918805,-104.984016|United States of America|US|Colorado
+18|Washington, D.C.|38.89954938,-77.00941858|United States of America|US|District of Columbia
+19|Salt Lake City|40.7750163,-111.9300519|United States of America|US|Utah
+20|Stockholm|59.35075995,18.09733473|Sweden|SE|Stockholm
+21|Seoul|37.5663491,126.999731|South Korea|KR|Seoul
+22|Sao Paulo|-23.55867959,-46.62501998|Brazil|BR|Sao Paulo
+23|Sydney|-33.92001097,151.1851798|Australia|AU|New South Wales
+24|Lagos|6.443261653,3.391531071|Nigeria|NG|Lagos
+25|Cairo|30.04996035,31.24996822|Egypt|EG|Al Qahirah

@@ -21,6 +21,18 @@ def index():
 
     return render_template("homepage.html")
 
+@app.route('/search-results')
+def search_city():
+    """Return photo results from city search."""
+
+    pass
+
+@app.route('/photo-details')
+def show_photo_and_location():
+    """Show enlarged photo and lat/lon"""
+
+    pass
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension

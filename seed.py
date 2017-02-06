@@ -1,5 +1,5 @@
-from sqlalchemy import func
 from model import City, connect_to_db, db
+from server import app
 
 
 def load_cities():
@@ -10,6 +10,7 @@ def load_cities():
     City.query.delete()
 
     for row in open("seed_data/cities_data.txt"):
+        print row
         row = row.rstrip()
         city_id, name, lat, lng, country, iso2, province = row.split("|")
         city = City(city_id=city_id,
@@ -25,7 +26,6 @@ def load_cities():
 
     #commit the added rows
     db.session.commit()
-
 
 
 if __name__ == '__main__':

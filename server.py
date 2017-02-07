@@ -1,5 +1,13 @@
 """Photo Locations."""
 
+import flickrapi
+
+import json
+
+import os
+
+from get_photos import (api_key, api_secret, flickr, get_photos_by_location)
+
 from jinja2 import StrictUndefined
 
 from flask import (Flask, jsonify, render_template, redirect, request, flash,
@@ -31,10 +39,14 @@ def search_city():
     city_search = '%{}%'.format(search)
     city = City.query.filter(City.name.ilike(city_search)).first()
     name = city.name
-    province = city.province
+    lat = city.lat
+    lng = city.lng
+
+    url = get_photos_by_location(lat, lng)
+
     return render_template("search-results.html",
                            name=name,
-                           province=province)
+                           url=url)
 
 
 @app.route('/photo-details')
@@ -53,7 +65,5 @@ if __name__ == "__main__":
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
-
-
 
     app.run(port=5000, host='0.0.0.0')

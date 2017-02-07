@@ -2,8 +2,8 @@ import flickrapi
 import json
 import os
 
-api_key = os.environ['FLICKR_KEY']
-api_secret = os.environ['FLICKR_SECRET']
+api_key = os.environ[u'FLICKR_KEY']
+api_secret = os.environ[u'FLICKR_SECRET']
 
 flickr = flickrapi.FlickrAPI(api_key, api_secret)
 

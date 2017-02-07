@@ -11,15 +11,15 @@ db = SQLAlchemy()
 class City(db.Model):
     """Cities with lat/lon information."""
 
-    __tablename__ = "users"
+    __tablename__ = "cities"
 
     city_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(33))
-    lat = db.Column(db.Integer)
-    lng = db.Column(db.Integer)
-    country = db.Column(db.String(32))
-    iso2 = db.Column(db.String(3))
-    province = db.Column(db.String(43))
+    name = db.Column(db.String(33), nullable=True)
+    lat = db.Column(db.Numeric, nullable=True)
+    lng = db.Column(db.Numeric, nullable=True)
+    country = db.Column(db.String(32), nullable=True)
+    iso2 = db.Column(db.String(3), nullable=True)
+    province = db.Column(db.String(43), nullable=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""

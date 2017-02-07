@@ -7,12 +7,11 @@ def load_cities():
 
     print "Cities"
 
-    City.query.delete()
-
     for row in open("seed_data/cities_data.txt"):
-        print row
         row = row.rstrip()
         city_id, name, lat, lng, country, iso2, province = row.split("|")
+        lat = float(lat)
+        lng = float(lng)
         city = City(city_id=city_id,
                     name=name,
                     lat=lat,

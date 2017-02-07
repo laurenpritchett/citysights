@@ -27,10 +27,12 @@ def index():
 def search_city():
     """Return photo results from city search."""
 
-    city_searched = request.args.get('city-search')
-    city_name = '%{}%'.format(city_searched)
+    # city_searched = request.args.get('city-search')
+    # city_name = '%{}%'.format(city_searched)
+    cities = City.query.all()
+    # city = City.query.filter(City.name.ilike(city_name)).all()
 
-    return render_template("search-results.html", city_name=city_name)
+    return render_template("search-results.html", cities=cities)
 
 
 @app.route('/photo-details')

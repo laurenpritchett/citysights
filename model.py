@@ -14,12 +14,12 @@ class City(db.Model):
     __tablename__ = "cities"
 
     city_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(33), nullable=True)
-    lat = db.Column(db.Numeric, nullable=True)
-    lng = db.Column(db.Numeric, nullable=True)
-    country = db.Column(db.String(32), nullable=True)
-    iso2 = db.Column(db.String(3), nullable=True)
-    province = db.Column(db.String(43), nullable=True)
+    name = db.Column(db.String(33), nullable=False)
+    lat = db.Column(db.Float, nullable=False)
+    lng = db.Column(db.Float, nullable=False)
+    country = db.Column(db.String(32), nullable=False)
+    iso2 = db.Column(db.String(3), nullable=False)
+    province = db.Column(db.String(43), nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""

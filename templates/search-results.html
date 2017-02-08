@@ -4,13 +4,14 @@
 
 <h1>{{ name }} Photos</h1>
 
+<h3>Not what you were looking for? Try another search, like "Berlin" or "San Francisco"</h3><br><br>
+
 <section id="search-results">
-  <img src="{{ img_src }}" alt="{{ name }}"><br>
-  <a href="{{ link }}">Photo Source</a>
-
+  {% for link, photo in url_pairs %}
+    <img src="{{ photo }}"><br>
+    <a href="{{ link }}">Photo Source</a><br><br><br>
+  {% endfor %}
 </section>
-
-<h3>Not what you were looking for? Try another search, like "Berlin" or "San Francisco"</h3>
 
 
   

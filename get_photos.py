@@ -29,7 +29,7 @@ def get_photos_by_location(lat, lon):
 
         photo_url_template = "https://farm{}.staticflickr.com/{}/{}_{}.jpg"
         photo_url = photo_url_template.format(farm_id, server_id, photo_id, photo_secret)
-        url_pairs.append([photo_source_url, photo_url])
+        url_pairs.append([photo_id, photo_source_url, photo_url])
 
     return url_pairs
 

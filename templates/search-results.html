@@ -9,8 +9,8 @@
 <h3>Click on a photo to see location information!</h3><br><br>
 
 <section id="search-results">
-  {% for link, photo in url_pairs %}
-    <a href="/photo-details"><img src="{{ photo }}"></a><br>
+  {% for photo_id, link, photo in url_pairs %}
+    <a href="/photo-details/{{ photo_id }}"><img src="{{ photo }}"></a><br>
     <a href="{{ link }}">Photo Source</a><br><br><br>
   {% endfor %}
 </section>

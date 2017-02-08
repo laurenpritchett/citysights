@@ -6,7 +6,8 @@ import json
 
 import os
 
-from get_photos import (api_key, api_secret, flickr, get_photos_by_location)
+from get_photos import (api_key, api_secret, flickr, get_photos_by_location,
+                        get_photo_location)
 
 from jinja2 import StrictUndefined
 
@@ -46,6 +47,7 @@ def search_city():
 
     return render_template("search-results.html",
                            name=name,
+                           photo_id = photo_id,
                            url_pairs=url_pairs)
 
 

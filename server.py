@@ -49,11 +49,24 @@ def search_city():
                            url_pairs=url_pairs)
 
 
-@app.route('/photo-details')
+@app.route('/photo-details/<photo_id>')
 def show_photo_and_location():
-    """Show enlarged photo and lat/lon"""
+    """Show photo and location details."""
 
-    pass
+    location_details = get_photo_location(photo_id)
+
+    lat = location_details['lat']
+    lng = location_details['lng']
+    neighborhood = location_details['neighborhood']
+    locality = location_details['locality']
+    country = location_details['country']
+
+    return render_template("photo-details.html",
+                           lat=lat,
+                           lng=lng,
+                           neighborhood=neighborhood,
+                           locality=locality,
+                           country=country)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

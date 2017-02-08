@@ -30,8 +30,27 @@ def get_photos_by_location(lat, lon):
         photo_url_template = "https://farm{}.staticflickr.com/{}/{}_{}.jpg"
         photo_url = photo_url_template.format(farm_id, server_id, photo_id, photo_secret)
         url_pairs.append([photo_source_url, photo_url])
+
     return url_pairs
 
 
-laguna_beach_photo_urls = get_photos_by_location(33.5422, -117.7831)
-print laguna_beach_photo_urls
+def get_photo_location(photo_id):
+    """Get lat/lon"""
+
+    location_details = {}
+
+    data = flickr.photos.geo.getLocation(photo_id=photo_id, format='json')
+    location_info = json.loads(data)
+
+    location_details['lat'] = location_info['photo']['location']['latitude']
+    location_details['lng'] = location_info['photo']['location']['longitude']
+    location_details['neighborhood'] = location_info['photo']['neighbourhood']['_content']
+    location_details['locality'] = location_info['photo']['locality']['_content']
+    location_details['country'] = location_info['photo']['country']['_content']
+
+    return location_details
+
+
+
+# laguna_beach_photo_urls = get_photos_by_location(33.5422, -117.7831)
+# print laguna_beach_photo_urls

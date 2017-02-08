@@ -5,3 +5,8 @@ h1 {
 h3 {
     text-align: center;
 }
+
+#search-results {
+    margin: auto;
+    text-align: center;
+}

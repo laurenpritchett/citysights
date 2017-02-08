@@ -42,11 +42,15 @@ def search_city():
     lat = city.lat
     lng = city.lng
 
-    url = get_photos_by_location(lat, lng)
+    url_pairs = get_photos_by_location(lat, lng)
+    for url_pair in url_pairs:
+        link = url_pair[0]
+        img_src = url_pair[1]
 
     return render_template("search-results.html",
                            name=name,
-                           url=url)
+                           link=link,
+                           img_src=img_src)
 
 
 @app.route('/photo-details')

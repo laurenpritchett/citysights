@@ -44,12 +44,14 @@ def get_photo_location(photo_id):
 
     location_details['lat'] = location_info['photo']['location']['latitude']
     location_details['lng'] = location_info['photo']['location']['longitude']
-    location_details['neighborhood'] = location_info['photo']['neighbourhood']['_content']
-    location_details['locality'] = location_info['photo']['locality']['_content']
-    location_details['country'] = location_info['photo']['country']['_content']
+    location_details['neighborhood'] = location_info['photo']['location']['neighbourhood']['_content']
+    location_details['locality'] = location_info['photo']['location']['locality']['_content']
+    location_details['country'] = location_info['photo']['location']['country']['_content']
 
     return location_details
 
+test = get_photo_location(32635633875)
+print test
 
 
 # laguna_beach_photo_urls = get_photos_by_location(33.5422, -117.7831)

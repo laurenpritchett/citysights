@@ -47,12 +47,11 @@ def search_city():
 
     return render_template("search-results.html",
                            name=name,
-                           photo_id = photo_id,
                            url_pairs=url_pairs)
 
 
 @app.route('/photo-details/<photo_id>')
-def show_photo_and_location():
+def show_photo_and_location(photo_id):
     """Show photo and location details."""
 
     location_details = get_photo_location(photo_id)

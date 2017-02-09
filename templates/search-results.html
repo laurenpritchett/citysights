@@ -10,7 +10,7 @@
 
 <section id="search-results">
   {% for photo_id, link, photo in url_pairs %}
-    <a href="/photo-details/{{ photo_id }}"><img src="{{ photo }}"></a><br>
+    <a href="/photo-details/{{ photo_id }}"><img src="{{ photo }}" id="{{ photo_id }}"></a><br>
     <a href="{{ link }}">Photo Source</a><br><br><br>
   {% endfor %}
 </section>

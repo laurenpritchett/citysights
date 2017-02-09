@@ -4,11 +4,20 @@
 
 <h1>Photo Details</h1><br>
 
+<section id="photo-details">
+
+<img src="photo_src" id="photo-details">
 <h3>Latitude: {{ lat }}</h3>
 <h3>Longitude: {{ lng }}</h3>
 <h3>Locality: {{ locality }}</h3>
 <h3>Country: {{ country }}</h3>
 
+</section>
 
+<script>
+$( document ).ready(function (){
+    $("#photo-details").attr("src", photo_src)
+});
+</script>
 
 {% endblock %}

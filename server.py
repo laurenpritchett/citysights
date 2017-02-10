@@ -7,7 +7,7 @@ import json
 import os
 
 from get_photos import (api_key, api_secret, flickr, get_photos_by_location,
-                        get_photo_location)
+                        get_photo_location, get_photo_url)
 
 from jinja2 import StrictUndefined
 
@@ -18,6 +18,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import City, connect_to_db, db
 
+from secret import gApiKey
 app = Flask(__name__)
 
 app.secret_key = "ABC"
@@ -54,6 +55,8 @@ def search_city():
 def show_photo_and_location(photo_id):
     """Show photo and location details."""
 
+    img_src = get_photo_url(photo_id)
+
     location_details = get_photo_location(photo_id)
 
     lat = location_details['lat']
@@ -63,11 +66,13 @@ def show_photo_and_location(photo_id):
     country = location_details['country']
 
     return render_template("photo-details.html",
+                           img_src=img_src,
                            lat=lat,
                            lng=lng,
                            neighborhood=neighborhood,
                            locality=locality,
-                           country=country)
+                           country=country, 
+                           gApiKey=gApiKey)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

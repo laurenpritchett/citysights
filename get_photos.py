@@ -49,3 +49,22 @@ def get_photo_location(photo_id):
     location_details['country'] = location_info['photo']['location']['country']['_content']
 
     return location_details
+
+
+def get_photo_url(photo_id):
+    """Get img src for a photo given the photo_id."""
+
+    data = flickr.photos.getInfo(photo_id=photo_id, format='json')
+    photo_info = json.loads(data)
+
+    farm_id = photo_info['photo']['farm']
+    server_id = photo_info['photo']['server']
+    photo_id = photo_id
+    photo_secret = photo_info['photo']['secret']
+
+    photo_url_template = "https://farm{}.staticflickr.com/{}/{}_{}.jpg"
+    photo_url = photo_url_template.format(farm_id, server_id, photo_id, photo_secret)
+
+    return photo_url
+
+# print get_photo_url(32733994625)

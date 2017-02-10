@@ -18,12 +18,15 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import City, connect_to_db, db
 
-from secret import gApiKey
+from secret import googleMapsApiKey
+
 app = Flask(__name__)
 
 app.secret_key = "ABC"
 
 app.jinja_env.undefined = StrictUndefined
+
+google_maps_api_key = os.environ['GOOGLE_KEY']
 
 
 @app.route('/')
@@ -71,8 +74,8 @@ def show_photo_and_location(photo_id):
                            lng=lng,
                            neighborhood=neighborhood,
                            locality=locality,
-                           country=country, 
-                           gApiKey=gApiKey)
+                           country=country,
+                           google_maps_api_key=google_maps_api_key)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

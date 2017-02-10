@@ -26,7 +26,8 @@
   <body>
     <div id="map"></div>
     <script>
-      var googleMapsApiKey = {{ google_maps_api_key }}
+      var googleMapsApiKey = "{{ google_maps_api_key }}";
+      var scriptSrc = "https://maps.googleapis.com/maps/api/js?key="+googleMapsApiKey+"&callback=initMap";
       function initMap() {
         var uluru = {lat: {{ lat }}, lng: {{ lng }}};
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -40,7 +41,7 @@
       }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key="+googleMapsApiKey+"&callback=initMap">
+    src=scriptSrc>
     </script>
     <br><br><br>
   </body>

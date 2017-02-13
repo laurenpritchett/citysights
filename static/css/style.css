@@ -15,3 +15,9 @@ h3 {
     margin: auto;
     text-align: center;
 }
+
+#map {
+height: 400px;
+width: 50%;
+margin: auto;
+}

@@ -45,11 +45,16 @@ def search_city():
     search = request.args.get('city-search')
     city_search = '%{}%'.format(search)
     city = City.query.filter(City.name.ilike(city_search)).first()
-    name = city.name
-    lat = city.lat
-    lng = city.lng
 
-    url_pairs = get_photos_by_location(lat, lng)
+    if city is not None:
+        name = city.name
+        lat = city.lat
+        lng = city.lng
+
+        url_pairs = get_photos_by_location(lat, lng)
+    else:
+        name = None
+        url_pairs = None
 
     return render_template("search-results.html",
                            name=name,

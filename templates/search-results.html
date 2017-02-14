@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% if name is not none %}
+  <h1>{{ name }} Photos</h1>
 
-<h1>{{ name }} Photos</h1>
+  <h3>Not what you were looking for? Try another search, like "Berlin" or "San Francisco"</h3><br>
 
-<h3>Not what you were looking for? Try another search, like "Berlin" or "San Francisco"</h3><br>
+  <h3>Click on a photo to see location information!</h3><br><br>
 
-<h3>Click on a photo to see location information!</h3><br><br>
-
-<section id="search-results">
-  {% for photo_id, link, photo in url_pairs %}
-    <a href="/photo-details/{{ photo_id }}"><img src="{{ photo }}" id="{{ photo_id }}"></a><br>
-    <a href="{{ link }}">Photo Source</a><br><br><br>
-  {% endfor %}
-</section>
+  <section id="search-results">
+    {% for photo_id, link, photo in url_pairs %}
+      <a href="/photo-details/{{ photo_id }}"><img src="{{ photo }}" id="{{ photo_id }}"></a><br>
+      <a href="{{ link }}">Photo Source</a><br><br><br>
+    {% endfor %}
+  </section>
+{% else %}
+  <h3> Sorry, that city is not in our database! Please try another.</h3>
+{% endif %}
 
 {% endblock %}

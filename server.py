@@ -1,4 +1,4 @@
-"""Photo Locations."""
+"""Photo Spots."""
 
 import flickrapi
 
@@ -20,7 +20,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import City, connect_to_db, db
 
-from secret import googleMapsApiKey
+from sqlalchemy.orm.exc import NoResultFound
+
 
 app = Flask(__name__)
 
@@ -36,6 +37,71 @@ def index():
     """Homepage."""
 
     return render_template("homepage.html")
+
+
+@app.route('/user-login')
+def user_login():
+    """Render HTML template with login form."""
+
+    return render_template("user-login.html")
+
+
+@app.route('/user-login', methods=["POST"])
+def handle_user_login():
+    """Handles login and registration for new users."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    # Check if user is in the database. If not, create a new user.
+    try:
+        current_user = User.query.filter(User.email == email).one()
+    except NoResultFound:
+        new_user = User(email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Welcome stranger!')
+        return redirect("/")
+
+    # Verify that user has entered the correct password.
+    if current_user.password == password:
+        session['user_id'] = current_user.user_id
+        flash('Welcome back!')
+        return redirect("/")
+    else:
+        flash('Incorrect email or password provided.')
+
+    return redirect("/")
+
+
+@app.route('/user-logout')
+def logout():
+    """Remove user_id from session and redirect to the home page."""
+
+    del session['user_id']
+    flash('See you later!')
+    return redirect("/")
+
+
+@app.route('/user/<user_id>')
+def user_page(user_id):
+    """ Show user profile."""
+
+    current_user = User.query.filter(User.user_id == user_id).one()
+
+    title_and_score = db.session.query(Movie.title,
+                                       Rating.score).\
+        join(Rating).\
+        filter(Rating.user_id == user_id).\
+        all()
+
+    progress = progress_tracker(user_id)
+
+    return render_template("user-profile.html",
+                           current_user=current_user,
+                           title_and_score=title_and_score,
+                           progress=progress,
+                           )
 
 
 @app.route('/search-results')

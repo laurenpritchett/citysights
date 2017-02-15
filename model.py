@@ -27,6 +27,24 @@ class City(db.Model):
         return "<City id=%s name=%s country=%s>" % (self.city_id, self.name, self.country)
 
 
+class User(db.Model):
+    """User of photo spots website."""
+
+    __tablename__ = "users"
+
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    first_name = db.Column(db.String(64), nullable=False)
+    last_name = db.Column(db.String(64), nullable=False)
+    email = db.Column(db.String(64), nullable=False)
+    password = db.Column(db.String(64), nullable=False)
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+
+
+
 ################################################################################
 # Helper functions
 

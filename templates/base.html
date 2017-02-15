@@ -32,6 +32,15 @@
         </div>
         <button type="submit" id="city-search-button" class="btn btn-default">Search for a city!</button>
       </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          {% if 'user_id' in session %}
+          <a href="/user-logout">Logout</a>
+          {% else %}
+          <a href="/user-login">Login</a>
+          {% endif %}
+        </li>
+      </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

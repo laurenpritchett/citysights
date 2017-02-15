@@ -74,6 +74,8 @@ def show_photo_and_location(photo_id):
 
     address = get_address_by_lat_lng(lat, lng)
 
+    # joined_address = address.split(" ").join("")
+
     return render_template("photo-details.html",
                            img_src=img_src,
                            lat=lat,

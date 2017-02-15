@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+  <h1>Search Results</h1><br>
+
 {% if name is not none %}
   <h1>{{ name }} Photos</h1>
 
@@ -15,7 +17,7 @@
     {% endfor %}
   </section>
 {% else %}
-  <h3> Sorry, that city is not in our database! Please try another.</h3>
+  <h3> Sorry, that city is not in our database! Please try another search.</h3>
 {% endif %}
 
 {% endblock %}

@@ -18,7 +18,7 @@ from flask import (Flask, jsonify, render_template, redirect, request, flash,
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import City, connect_to_db, db
+from model import City, User, connect_to_db, db
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -60,7 +60,7 @@ def handle_user_login():
         new_user = User(email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
-        flash('Welcome stranger!')
+        flash('Welcome!')
         return redirect("/")
 
     # Verify that user has entered the correct password.
@@ -94,8 +94,6 @@ def user_page(user_id):
         join(Rating).\
         filter(Rating.user_id == user_id).\
         all()
-
-    progress = progress_tracker(user_id)
 
     return render_template("user-profile.html",
                            current_user=current_user,

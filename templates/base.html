@@ -45,7 +45,11 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-  {% block content %} Put your content here {% endblock %}
+{% for message in get_flashed_messages() %}
+  <h3>{{ message }}</h3>
+{% endfor %}
+
+{% block content %} Put your content here {% endblock %}
 
 
 </body>

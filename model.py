@@ -9,7 +9,7 @@ db = SQLAlchemy()
 # Model definition
 
 class City(db.Model):
-    """Cities with lat/lon information."""
+    """City with location information."""
 
     __tablename__ = "cities"
 
@@ -42,6 +42,30 @@ class User(db.Model):
         """Provide helpful representation when printed."""
 
         return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+
+
+class Photo(db.Model):
+    """Photo with location information."""
+
+    __tablename__ = "photos"
+
+    photo_id = db.Column(db.Integer, primary_key=True)
+    img_src = db.Column(db.String(200), nullable=False)
+    city_id = db.Column(db.Integer)
+
+
+class UserPhoto(db.Model):
+    """Association table for user and photo spot."""
+
+    __tablename__ = "users_photos"
+
+    user_photo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    photo_id = db.Column(db.Integer,
+                         db.ForeignKey('photos.photo_id'),
+                         nullable=False)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'),
+                        nullable=False)
 
 
 

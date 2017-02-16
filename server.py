@@ -52,26 +52,30 @@ def handle_user_login():
 
     email = request.form.get("email")
     password = request.form.get("password")
+    first_name = request.form.get("fname")
+    last_name = request.form.get("lname")
 
     # Check if user is in the database. If not, create a new user.
     try:
         current_user = User.query.filter(User.email == email).one()
     except NoResultFound:
-        new_user = User(email=email, password=password)
+        new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
         db.session.add(new_user)
         db.session.commit()
-        flash('Welcome!')
-        return redirect("/")
+        current_user = User.query.filter(User.email == email).one()
+        session['user_id'] = current_user.user_id
+        flash('Welcome to Photo Spots!')
+        return redirect("/user/" + str(current_user.user_id))
 
     # Verify that user has entered the correct password.
     if current_user.password == password:
         session['user_id'] = current_user.user_id
         flash('Welcome back!')
-        return redirect("/")
+        return redirect("/user/" + str(current_user.user_id))
     else:
         flash('Incorrect email or password provided.')
 
-    return redirect("/")
+    return redirect("/user-login")
 
 
 @app.route('/user-logout')
@@ -89,16 +93,8 @@ def user_page(user_id):
 
     current_user = User.query.filter(User.user_id == user_id).one()
 
-    title_and_score = db.session.query(Movie.title,
-                                       Rating.score).\
-        join(Rating).\
-        filter(Rating.user_id == user_id).\
-        all()
-
     return render_template("user-profile.html",
-                           current_user=current_user,
-                           title_and_score=title_and_score,
-                           progress=progress,
+                           current_user=current_user
                            )
 
 

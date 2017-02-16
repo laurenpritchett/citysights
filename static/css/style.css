@@ -6,6 +6,11 @@ h3 {
     text-align: center;
 }
 
+.form {
+  margin: auto;
+  text-align: center;
+}
+
 #search-results {
     margin: auto;
     text-align: center;

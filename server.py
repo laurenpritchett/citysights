@@ -138,6 +138,7 @@ def show_photo_and_location(photo_id):
 
     return render_template("photo-details.html",
                            img_src=img_src,
+                           photo_id=photo_id,
                            lat=lat,
                            lng=lng,
                            address=address,

@@ -37,6 +37,9 @@ class User(db.Model):
     last_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(64), nullable=False)
+    photos = db.relationship("Photo",
+                             secondary="users_photos",
+                             backref="users")
 
     def __repr__(self):
         """Provide helpful representation when printed."""

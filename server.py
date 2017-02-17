@@ -78,20 +78,20 @@ def handle_user_login():
     return redirect("/user-login")
 
 
-@app.route('/save-photo')
+@app.route('/save-photo', methods=["POST"])
 def save_photo():
     """Saves photo to database."""
 
-    # img_src = request.form.get("img_src")
-    # photo_id = request.form.get("photo_id")
+    img_src = request.form.get("src")
+    photo_id = request.form.get("id")
     city_id = City.query.filter(City.name == session['city_name']).one().city_id
     user_id = session['user_id']
 
     print "city id is: ", city_id
 
-    # new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
-    # db.session.add(new_photo)
-    # db.session.commit()
+    new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
+    db.session.add(new_photo)
+    db.session.commit()
 
     return "OK"
 

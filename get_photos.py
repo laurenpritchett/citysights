@@ -44,7 +44,6 @@ def get_photo_location(photo_id):
 
     location_details['lat'] = location_info['photo']['location']['latitude']
     location_details['lng'] = location_info['photo']['location']['longitude']
-    location_details['city'] = location_info['photo']['location']['locality']
 
     return location_details
 
@@ -65,4 +64,4 @@ def get_photo_url(photo_id):
 
     return photo_url
 
-print get_photo_location(32733994625)
+# print get_photo_location(32733994625)

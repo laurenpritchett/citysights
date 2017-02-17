@@ -49,7 +49,7 @@ class Photo(db.Model):
 
     __tablename__ = "photos"
 
-    photo_id = db.Column(db.Integer, primary_key=True)
+    photo_id = db.Column(db.String(200), primary_key=True)
     img_src = db.Column(db.String(200), nullable=False)
     city_id = db.Column(db.Integer,
                         db.ForeignKey('cities.city_id'))

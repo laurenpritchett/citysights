@@ -111,8 +111,13 @@ def user_page(user_id):
 
     current_user = User.query.filter(User.user_id == user_id).one()
 
+    saved_photos = Photo.query(Photo.photo_id,
+                               Photo.img_src,
+                               Photo.city_id).filter(Photo.user_id == user_id).all()
+
     return render_template("user-profile.html",
-                           current_user=current_user
+                           current_user=current_user,
+                           saved_photos=saved_photos
                            )
 
 

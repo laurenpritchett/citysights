@@ -67,7 +67,7 @@ class Photo(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Photo photo_id=%s city_id=%s, user_id=%s" % (self.photo_id, self.city_id, self.user_id)
+        return "<Photo photo_id=%s city_id=%s, user_id=%s>" % (self.photo_id, self.city_id, self.user_id)
 
 
 ################################################################################

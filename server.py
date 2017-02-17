@@ -18,7 +18,7 @@ from flask import (Flask, jsonify, render_template, redirect, request, flash,
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import City, User, connect_to_db, db
+from model import City, User, Photo, connect_to_db, db
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -78,6 +78,24 @@ def handle_user_login():
     return redirect("/user-login")
 
 
+@app.route('/save-photo')
+def save_photo():
+    """Saves photo to database."""
+
+    # img_src = request.form.get("img_src")
+    # photo_id = request.form.get("photo_id")
+    city_id = City.query.filter(City.name == session['city_name']).one().city_id
+    user_id = session['user_id']
+
+    print "city id is: ", city_id
+
+    # new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
+    # db.session.add(new_photo)
+    # db.session.commit()
+
+    return "OK"
+
+
 @app.route('/user-logout')
 def logout():
     """Remove user_id from session and redirect to the home page."""
@@ -108,8 +126,10 @@ def search_city():
 
     if city is not None:
         name = city.name
+        session['city_name'] = name
         lat = city.lat
         lng = city.lng
+        city_id = city.city_id
 
         url_pairs = get_photos_by_location(lat, lng)
     else:
@@ -118,7 +138,8 @@ def search_city():
 
     return render_template("search-results.html",
                            name=name,
-                           url_pairs=url_pairs)
+                           url_pairs=url_pairs,
+                           city_id=city_id)
 
 
 @app.route('/photo-details/<photo_id>')

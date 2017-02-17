@@ -3,7 +3,7 @@
 
 
 <h1>Photo Details</h1><br>
-<div id="photo-id" value="{{ photo_id }}"><h3>{{ photo_id }}<h3></div>
+<h3 id="photo-id">{{ photo_id }}<h3>
 
 <section id="photo-details">
 
@@ -35,6 +35,25 @@
 <div id="map"></div>
 
 <script>
+
+  function disableHeartButton() {
+
+  }
+  function savePhoto(evt) {
+
+    var photoDetails = {
+      "src": $("img#photo-details").attr("src"),
+      "id": $("h3#photo-id").html()
+    };
+
+    $.post("/save-photo",
+           photoDetails,
+           disableHeartButton
+           );
+
+  }
+
+  $("button#love").on("click", savePhoto)
 
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {

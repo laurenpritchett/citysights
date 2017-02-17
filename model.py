@@ -37,9 +37,6 @@ class User(db.Model):
     last_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(64), nullable=False)
-    photos = db.relationship("Photo",
-                             secondary="users_photos",
-                             backref="users")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -48,28 +45,29 @@ class User(db.Model):
 
 
 class Photo(db.Model):
-    """Photo with location information."""
+    """Photo saved by a user."""
 
     __tablename__ = "photos"
 
     photo_id = db.Column(db.Integer, primary_key=True)
     img_src = db.Column(db.String(200), nullable=False)
-    city_id = db.Column(db.Integer)
-
-
-class UserPhoto(db.Model):
-    """Association table for user and photo spot."""
-
-    __tablename__ = "users_photos"
-
-    user_photo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    photo_id = db.Column(db.Integer,
-                         db.ForeignKey('photos.photo_id'),
-                         nullable=False)
+    city_id = db.Column(db.Integer,
+                        db.ForeignKey('cities.city_id'))
     user_id = db.Column(db.Integer,
-                        db.ForeignKey('users.user_id'),
-                        nullable=False)
+                        db.ForeignKey('users.user_id'))
 
+    user = db.relationship("User",
+                           backref=db.backref("photos",
+                                              order_by=photo_id))
+
+    city = db.relationship("City",
+                           backref=db.backref("photos",
+                                              order_by=photo_id))
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Photo photo_id=%s city_id=%s, user_id=%s" % (self.photo_id, self.city_id, self.user_id)
 
 
 ################################################################################

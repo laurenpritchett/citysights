@@ -78,24 +78,6 @@ def handle_user_login():
     return redirect("/user-login")
 
 
-@app.route('/save-photo', methods=["POST"])
-def save_photo():
-    """Saves photo to database."""
-
-    img_src = request.form.get("src")
-    photo_id = request.form.get("id")
-    city_id = City.query.filter(City.name == session['city_name']).one().city_id
-    user_id = session['user_id']
-
-    print "city id is: ", city_id
-
-    new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
-    db.session.add(new_photo)
-    db.session.commit()
-
-    return "OK"
-
-
 @app.route('/user-logout')
 def logout():
     """Remove user_id from session and redirect to the home page."""
@@ -111,13 +93,20 @@ def user_page(user_id):
 
     current_user = User.query.filter(User.user_id == user_id).one()
 
-    saved_photos = Photo.query(Photo.photo_id,
-                               Photo.img_src,
-                               Photo.city_id).filter(Photo.user_id == user_id).all()
+    saved_photos = Photo.query.filter(Photo.user_id == user_id).all()
+
+    saved_photos_info = []
+
+    for saved_photo in saved_photos:
+        saved_photos_info.append({'photo_id': saved_photo.photo_id,
+                                  'img_src': saved_photo.img_src,
+                                  'city_id': saved_photo.city_id,
+                                  'user_id': saved_photo.user_id
+                                  })
 
     return render_template("user-profile.html",
                            current_user=current_user,
-                           saved_photos=saved_photos
+                           saved_photos_info=saved_photos_info
                            )
 
 
@@ -169,6 +158,24 @@ def show_photo_and_location(photo_id):
                            lng=lng,
                            address=address,
                            google_maps_api_key=google_maps_api_key)
+
+
+@app.route('/save-photo', methods=["POST"])
+def save_photo():
+    """Saves photo to database."""
+
+    img_src = request.form.get("src")
+    photo_id = request.form.get("id")
+    city_id = City.query.filter(City.name == session['city_name']).one().city_id
+    user_id = session['user_id']
+
+    print "city id is: ", city_id
+
+    new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
+    db.session.add(new_photo)
+    db.session.commit()
+
+    return "OK"
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

@@ -78,6 +78,31 @@ def handle_user_login():
     return redirect("/user-login")
 
 
+@app.route('/user-registration', methods=["POST"])
+def handle_user_registration():
+    """Handles login and registration for new users."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+    first_name = request.form.get("fname")
+    last_name = request.form.get("lname")
+
+    # Check if user is in the database. If not, create a new user.
+    try:
+        current_user = User.query.filter(User.email == email).one()
+    except NoResultFound:
+        new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
+        db.session.add(new_user)
+        db.session.commit()
+        current_user = User.query.filter(User.email == email).one()
+        session['user_id'] = current_user.user_id
+        flash('Welcome to Photo Spots!')
+        return redirect("/user/" + str(current_user.user_id))
+
+    flash('Sorry, this email is already registered. Please log in or create a new account.')
+    return redirect("/")
+
+
 @app.route('/user-logout')
 def logout():
     """Remove user_id from session and redirect to the home page."""

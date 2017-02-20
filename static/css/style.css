@@ -10,7 +10,9 @@ h3 {
   margin: auto;
   text-align: center;
 }
-
+#photo-id{
+    display: none;
+}
 #search-results {
     margin: auto;
     text-align: center;

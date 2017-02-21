@@ -174,7 +174,7 @@ def show_photo_and_location(photo_id):
 
     address = get_address_by_lat_lng(lat, lng)
 
-    Photo.query.filter(Photo.user_id == session['user_id']).first()
+    saved = Photo.query.filter(Photo.user_id == session['user_id'], Photo.photo_id == photo_id).first()
 
     # joined_address = address.split(" ").join("")
 
@@ -184,7 +184,8 @@ def show_photo_and_location(photo_id):
                            lat=lat,
                            lng=lng,
                            address=address,
-                           google_maps_api_key=google_maps_api_key)
+                           google_maps_api_key=google_maps_api_key,
+                           saved=saved)
 
 
 @app.route('/save-photo', methods=["POST"])

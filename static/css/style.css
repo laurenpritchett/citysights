@@ -6,6 +6,11 @@ h3 {
     text-align: center;
 }
 
+.photos{
+    max-width: 500px;
+    margin: auto;
+}
+
 .form {
   margin: auto;
   text-align: center;

@@ -174,6 +174,8 @@ def show_photo_and_location(photo_id):
 
     address = get_address_by_lat_lng(lat, lng)
 
+    Photo.query.filter(Photo.user_id == session['user_id']).first()
+
     # joined_address = address.split(" ").join("")
 
     return render_template("photo-details.html",

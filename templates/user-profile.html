@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ current_user.first_name }}'s Saved Photo Spots</h1>
+<h1>{{ current_user.first_name }}'s Saved Photo Spots</h1><br>
 
+<div class="photos">
 {% for saved_photo_info in saved_photos_info %}
-
 
   <a href="/photo-details/{{ saved_photo_info['photo_id'] }}">
     <img src="{{ saved_photo_info['img_src'] }}" 
-    id="{{ saved_photo_info['photo_id'] }}" class="img-responsive"></a><br><br>
-
+    id="{{ saved_photo_info['photo_id'] }}"></a><br><br>
 
 {% endfor %}
+</div>
   
 {% endblock %}

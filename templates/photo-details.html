@@ -2,7 +2,8 @@
 {% block content %}
 
 
-<h1>Photo Details</h1><br>
+<h1>Photo Details</h1>
+
 <h3 id="photo-id">{{ photo_id }}<h3>
 
 <div class="photos">
@@ -12,16 +13,15 @@
   {% if saved is none %}
     <button type="button" class="btn btn-default btn-lg" id="love" title="Favorite">
       <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-    </button>
+    </button><br><br>
   {% elif saved is not none %}
     <button type="button" class="btn btn-default btn-lg" id="unlove" title="Unfavorite">
       <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-    </button>
+    </button><br><br>
   {% endif %}
 </div>
 
-<h3>Location: <a href="http://maps.google.com/?q={{ address}}">{{ address }} </a></h3><br><br>
-
+<h3>Location: <a href="http://maps.google.com/?q={{ address}}">{{ address }} </a></h3>
 
 <input id="origin-input" class="controls" type="text"
   placeholder="Enter an origin location">

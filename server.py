@@ -150,6 +150,7 @@ def search_city():
     else:
         name = None
         url_pairs = None
+        city_id = None
 
     return render_template("search-results.html",
                            name=name,

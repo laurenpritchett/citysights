@@ -10,7 +10,7 @@
   <img src="{{ img_src }}" id="photo-details"><br><br>
 
   {% if saved is none %}
-    <button type="button" class="btn btn-default btn-lg" id="love" data-toggle="tooltip" data-placement="right" title="Favorite">
+    <button type="button" class="btn btn-default btn-lg" id="love" title="Favorite">
       <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
     </button>
   {% elif saved is not none %}
@@ -40,7 +40,7 @@
   <label for="changemode-driving">Driving</label>
 </div>
 
-<div id="map"></div>
+<div id="map"></div><br><br>
 
 <script>
 
@@ -50,6 +50,7 @@
   }
 
   function savePhoto(evt) {
+    console.log('in save photo');
 
     var photoDetails = {
       "src": $("img#photo-details").attr("src"),
@@ -71,6 +72,7 @@
   }
 
   function removePhoto(evt) {
+    console.log('in remove photo');
 
     var photoId = {
       "id": $("h3#photo-id").html()
@@ -85,7 +87,7 @@
 
   $("button#unlove").on("click", removePhoto)
 
-
+  // Following borrowed from GoogleMaps API sample code
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       mapTypeControl: false,
@@ -172,6 +174,8 @@
       }
     });
   };
+  // End Google Maps API sample code.
+
 </script>
 
 <script async defer

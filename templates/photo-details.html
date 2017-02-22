@@ -10,12 +10,12 @@
 <img src="{{ img_src }}" id="photo-details"><br><br>
 
 {% if saved is none %}
-<button type="button" class="btn btn-default btn-lg" id="love">
-  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+<button type="button" class="btn btn-default btn-lg" id="love" data-toggle="tooltip" data-placement="right" title="Unfavorite">
+  <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
 </button>
 {% elif saved is not none %}
-<button type="button" class="btn btn-default btn-lg" id="remove">
-  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+<button type="button" class="btn btn-default btn-lg" id="unlove">
+  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
 </button>
 {% endif %}
 
@@ -43,8 +43,10 @@
 
 <script>
 
-  function disableHeartButton() {
-    $("button#love").prop("disabled",true);
+  $('[data-toggle="tooltip"]').tooltip();
+
+  function fillHeartButton() {
+    $("button#love").replaceWith('<button type="button" class="btn btn-default btn-lg" id="unlove"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></button>');
     alert('Saved to Photo Spots!')
   }
 
@@ -57,12 +59,33 @@
 
     $.post("/save-photo",
            photoDetails,
-           disableHeartButton
+           fillHeartButton
            );
 
   }
 
   $("button#love").on("click", savePhoto)
+
+  function emptyHeartButton() {
+    $("button#unlove").replaceWith('<button type="button" class="btn btn-default btn-lg" id="love"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>');
+    alert('Removed from Photo Spots!')
+  }
+
+  function removePhoto(evt) {
+
+    var photoId = {
+      "id": $("h3#photo-id").html()
+    };
+
+    $.post("/remove-photo",
+           photoId,
+           emptyHeartButton
+           );
+
+  }
+
+  $("button#unlove").on("click", removePhoto)
+
 
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Photo Spots</h1>
-<h3>The world's most interesting photos by city!</h3><br><br>
+<h3>Create an account or login to discover the world's best photo spots!</h3><br><br>
 
 {% if 'user_id' not in session %}
 <form class='form' action='/user-registration' method='POST'>

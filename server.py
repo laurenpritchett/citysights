@@ -205,6 +205,20 @@ def save_photo():
 
     return "OK"
 
+
+@app.route('/remove-photo', methods=["POST"])
+def remove_photo():
+    """Removes photo from database."""
+
+    photo_id = request.form.get("id")
+    user_id = session['user_id']
+
+    photo = Photo.query.filter(Photo.photo_id == photo_id, Photo.user_id == user_id).first()
+    db.session.delete(photo)
+    db.session.commit()
+
+    return "OK"
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension

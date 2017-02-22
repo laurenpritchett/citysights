@@ -5,19 +5,20 @@
 <h1>Photo Details</h1><br>
 <h3 id="photo-id">{{ photo_id }}<h3>
 
-<section id="photo-details">
+<div class="photos">
 
-<img src="{{ img_src }}" id="photo-details"><br><br>
+  <img src="{{ img_src }}" id="photo-details"><br><br>
 
-{% if saved is none %}
-<button type="button" class="btn btn-default btn-lg" id="love" data-toggle="tooltip" data-placement="right" title="Unfavorite">
-  <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-</button>
-{% elif saved is not none %}
-<button type="button" class="btn btn-default btn-lg" id="unlove">
-  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-</button>
-{% endif %}
+  {% if saved is none %}
+    <button type="button" class="btn btn-default btn-lg" id="love" data-toggle="tooltip" data-placement="right" title="Favorite">
+      <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+    </button>
+  {% elif saved is not none %}
+    <button type="button" class="btn btn-default btn-lg" id="unlove" title="Unfavorite">
+      <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+    </button>
+  {% endif %}
+</div>
 
 <h3>Location: <a href="http://maps.google.com/?q={{ address}}">{{ address }} </a></h3><br><br>
 
@@ -42,8 +43,6 @@
 <div id="map"></div>
 
 <script>
-
-  $('[data-toggle="tooltip"]').tooltip();
 
   function fillHeartButton() {
     $("button#love").replaceWith('<button type="button" class="btn btn-default btn-lg" id="unlove"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></button>');
@@ -178,8 +177,5 @@
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key}}&libraries=places&callback=initMap">
 </script>
-<br><br><br>
-
-</section>
 
 {% endblock %}

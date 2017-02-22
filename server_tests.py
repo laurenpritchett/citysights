@@ -17,6 +17,14 @@ class FlaskTests(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn('<h1>Photo Spots</h1>', result.data)
 
+    def user_login(self):
+        """Test user login path."""
+
+        result = self.client.get("/user-login")
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn('<h1>User Login</h1>', result.data)
+
     # def test_search_results(self):
     #     """Test search result URL path."""
 

@@ -1,19 +1,15 @@
 """Photo Spots."""
 
-import flickrapi
-
-import json
-
 import os
 
-from get_photos import (api_key, api_secret, flickr, get_photos_by_location,
+from get_photos import (get_photos_by_location,
                         get_photo_location, get_photo_url)
 
-from get_address import gmaps, get_address_by_lat_lng
+from get_address import get_address_by_lat_lng
 
 from jinja2 import StrictUndefined
 
-from flask import (Flask, jsonify, render_template, redirect, request, flash,
+from flask import (Flask, render_template, redirect, request, flash,
                    session)
 
 from flask_debugtoolbar import DebugToolbarExtension

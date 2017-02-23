@@ -7,6 +7,8 @@ from get_photos import (get_photos_by_location,
 
 from get_address import get_address_by_lat_lng
 
+from photo_spots import (user_exists, correct_password, get_user)
+
 from jinja2 import StrictUndefined
 
 from flask import (Flask, render_template, redirect, request, flash,
@@ -44,27 +46,17 @@ def user_login():
 
 @app.route('/user-login', methods=["POST"])
 def handle_user_login():
-    """Handles login and registration for new users."""
+    """Handles login for users."""
 
-    email = request.form.get("email")
-    password = request.form.get("password")
+    user = get_user()
 
-    # Check if user is in the database. If not, redirect to login.
-    try:
-        current_user = User.query.filter(User.email == email).one()
-    except NoResultFound:
-        flash('Sorry, that email does not match our records.')
+    if not user_exists(user):
         return redirect("/user-login")
 
-    # Verify that user has entered the correct password.
-    if current_user.password == password:
-        session['user_id'] = current_user.user_id
-        flash('Welcome back!')
-        return redirect("/user/" + str(current_user.user_id))
+    if correct_password(user):
+        return redirect("/user/" + str(user.user_id))
     else:
-        flash('Incorrect password provided.')
-
-    return redirect("/user-login")
+        return redirect("/user-login")
 
 
 @app.route('/user-registration', methods=["POST"])
@@ -98,7 +90,7 @@ def logout():
 
     del session['user_id']
     flash('See you later!')
-    return redirect("/")
+    return redirect("/user-login")
 
 
 @app.route('/user/<user_id>')

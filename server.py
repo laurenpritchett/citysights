@@ -7,7 +7,9 @@ from get_photos import (get_photos_by_location,
 
 from get_address import get_address_by_lat_lng
 
-from photo_spots import (user_exists, correct_password, get_user)
+from photo_spots import (user_exists, correct_password, get_user, register_user,
+                         log_out, get_user_by_id, get_photos_by_user, get_city,
+                         is_saved)
 
 from jinja2 import StrictUndefined
 
@@ -17,8 +19,6 @@ from flask import (Flask, render_template, redirect, request, flash,
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import City, User, Photo, connect_to_db, db
-
-from sqlalchemy.orm.exc import NoResultFound
 
 
 app = Flask(__name__)
@@ -51,6 +51,7 @@ def handle_user_login():
     user = get_user()
 
     if not user_exists(user):
+        flash('Sorry, that email does not match our records.')
         return redirect("/user-login")
 
     if correct_password(user):
@@ -63,52 +64,32 @@ def handle_user_login():
 def handle_user_registration():
     """Handles login and registration for new users."""
 
-    email = request.form.get("email")
-    password = request.form.get("password")
-    first_name = request.form.get("fname")
-    last_name = request.form.get("lname")
+    user = get_user()
 
-    # Check if user is in the database. If not, create a new user.
-    try:
-        current_user = User.query.filter(User.email == email).one()
-    except NoResultFound:
-        new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
-        db.session.add(new_user)
-        db.session.commit()
-        current_user = User.query.filter(User.email == email).one()
-        session['user_id'] = current_user.user_id
-        flash('Welcome to Photo Spots!')
-        return redirect("/user/" + str(current_user.user_id))
-
-    flash('Sorry, this email is already registered. Please log in or create a new account.')
-    return redirect("/")
+    if not user_exists(user):
+        new_user = register_user()
+        return redirect("/user/" + str(new_user.user_id))
+    else:
+        flash('Sorry, that email is already registered. Please log in or create a new account.')
+        return redirect("/")
 
 
 @app.route('/user-logout')
 def logout():
     """Remove user_id from session and redirect to the home page."""
 
-    del session['user_id']
-    flash('See you later!')
+    log_out()
+
     return redirect("/user-login")
 
 
 @app.route('/user/<user_id>')
 def user_page(user_id):
-    """ Show user profile."""
+    """Show user profile."""
 
-    current_user = User.query.filter(User.user_id == user_id).one()
+    current_user = get_user_by_id(user_id)
 
-    saved_photos = Photo.query.filter(Photo.user_id == user_id).all()
-
-    saved_photos_info = []
-
-    for saved_photo in saved_photos:
-        saved_photos_info.append({'photo_id': saved_photo.photo_id,
-                                  'img_src': saved_photo.img_src,
-                                  'city_id': saved_photo.city_id,
-                                  'user_id': saved_photo.user_id
-                                  })
+    saved_photos_info = get_photos_by_user(user_id)
 
     return render_template("user-profile.html",
                            current_user=current_user,
@@ -120,9 +101,7 @@ def user_page(user_id):
 def search_city():
     """Return photo results from city search."""
 
-    search = request.args.get('city-search')
-    city_search = '%{}%'.format(search)
-    city = City.query.filter(City.name.ilike(city_search)).first()
+    city = get_city()
 
     if city is not None:
         name = city.name
@@ -130,8 +109,8 @@ def search_city():
         lat = city.lat
         lng = city.lng
         city_id = city.city_id
-
         url_pairs = get_photos_by_location(lat, lng)
+
     else:
         name = None
         url_pairs = None
@@ -156,9 +135,7 @@ def show_photo_and_location(photo_id):
 
     address = get_address_by_lat_lng(lat, lng)
 
-    saved = Photo.query.filter(Photo.user_id == session['user_id'], Photo.photo_id == photo_id).first()
-
-    # joined_address = address.split(" ").join("")
+    saved = is_saved(photo_id)
 
     return render_template("photo-details.html",
                            img_src=img_src,

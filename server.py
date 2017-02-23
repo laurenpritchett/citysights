@@ -48,20 +48,13 @@ def handle_user_login():
 
     email = request.form.get("email")
     password = request.form.get("password")
-    first_name = request.form.get("fname")
-    last_name = request.form.get("lname")
 
-    # Check if user is in the database. If not, create a new user.
+    # Check if user is in the database. If not, redirect to login.
     try:
         current_user = User.query.filter(User.email == email).one()
     except NoResultFound:
-        new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
-        db.session.add(new_user)
-        db.session.commit()
-        current_user = User.query.filter(User.email == email).one()
-        session['user_id'] = current_user.user_id
-        flash('Welcome to Photo Spots!')
-        return redirect("/user/" + str(current_user.user_id))
+        flash('Sorry, that email does not match our records.')
+        return redirect("/user-login")
 
     # Verify that user has entered the correct password.
     if current_user.password == password:
@@ -69,7 +62,7 @@ def handle_user_login():
         flash('Welcome back!')
         return redirect("/user/" + str(current_user.user_id))
     else:
-        flash('Incorrect email or password provided.')
+        flash('Incorrect password provided.')
 
     return redirect("/user-login")
 

@@ -77,7 +77,7 @@ def handle_user_registration():
 
     if not user_exists(user):
         new_user = register_user(email, password, first_name, last_name)
-        session['user_id'] = user.user_id
+        session['user_id'] = new_user.user_id
         flash('Welcome to Photo Spots!')
         return redirect("/user/" + str(new_user.user_id))
     else:
@@ -112,7 +112,8 @@ def user_page(user_id):
 def search_city():
     """Return photo results from city search."""
 
-    city = get_city()
+    search = request.args.get('city-search')
+    city = get_city(search)
 
     if city is not None:
         name = city.name
@@ -162,7 +163,11 @@ def show_photo_and_location(photo_id):
 def save_photo():
     """Saves photo to database."""
 
-    save_photo_spot()
+    img_src = request.form.get("src")
+    photo_id = request.form.get("id")
+    user_id = session['user_id']
+
+    save_photo_spot(img_src, photo_id, user_id)
 
     return "OK"
 
@@ -171,7 +176,10 @@ def save_photo():
 def remove_photo():
     """Removes photo from database."""
 
-    remove_photo_spot()
+    photo_id = request.form.get("id")
+    user_id = session['user_id']
+
+    remove_photo_spot(photo_id, user_id)
 
     return "OK"
 

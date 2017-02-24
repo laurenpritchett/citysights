@@ -19,7 +19,7 @@ app.jinja_env.undefined = StrictUndefined
 google_maps_api_key = os.environ['GOOGLE_KEY']
 
 
-def get_user(email):
+def get_user_by_email(email):
     """Get user by email."""
 
     user = User.query.filter(User.email == email).first()
@@ -88,22 +88,18 @@ def log_out():
     flash('See you later!')
 
 
-def get_city():
+def get_city(search):
     """Get city from search."""
 
-    search = request.args.get('city-search')
     city_search = '%{}%'.format(search)
     city = City.query.filter(City.name.ilike(city_search)).first()
     return city
 
 
-def save_photo_spot():
+def save_photo_spot(img_src, photo_id, user_id):
     """Save photo to database."""
 
-    img_src = request.form.get("src")
-    photo_id = request.form.get("id")
     city_id = City.query.filter(City.name == session['city_name']).one().city_id
-    user_id = session['user_id']
 
     new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
     db.session.add(new_photo)
@@ -119,11 +115,8 @@ def is_saved(photo_id):
     return saved
 
 
-def remove_photo_spot():
+def remove_photo_spot(photo_id, user_id):
     """Remove photo from database."""
-
-    photo_id = request.form.get("id")
-    user_id = session['user_id']
 
     photo = Photo.query.filter(Photo.photo_id == photo_id, Photo.user_id == user_id).first()
     db.session.delete(photo)

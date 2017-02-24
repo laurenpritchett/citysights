@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Photo Spots</h1>
-<h3>Create an account or login to discover the world's best photo spots!</h3><br><br>
 
 {% if 'user_id' not in session %}
+<h3>Create an account or login to discover the world's best photo spots!</h3><br>
+
 <form class='form' action='/user-registration' method='POST'>
   <input type='text' id='fname' name='fname' placeholder='First Name'><br><br>
   <input type='text' id='lname' name='lname' placeholder='Last Name'><br><br>

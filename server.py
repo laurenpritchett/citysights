@@ -7,18 +7,18 @@ from get_photos import (get_photos_by_location,
 
 from get_address import get_address_by_lat_lng
 
-from photo_spots import (user_exists, correct_password, get_user, register_user,
+from photo_spots import (user_exists, correct_password, get_user_by_email, register_user,
                          log_out, get_user_by_id, get_photos_by_user, get_city,
                          is_saved, save_photo_spot, remove_photo_spot)
 
 from jinja2 import StrictUndefined
 
-from flask import (Flask, render_template, redirect, request, flash,
-                   session)
+from flask import (Flask, render_template, redirect, flash,
+                   session, request)
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import City, User, Photo, connect_to_db, db
+from model import connect_to_db
 
 
 app = Flask(__name__)
@@ -48,15 +48,19 @@ def user_login():
 def handle_user_login():
     """Handles login for users."""
 
-    user = get_user()
+    email = request.form.get("email")
+    password = request.form.get("password")
+    user = get_user_by_email(email)
 
     if not user_exists(user):
         flash('Sorry, that email does not match our records.')
         return redirect("/user-login")
 
-    if correct_password(user):
+    if correct_password(user, password):
+        flash('Welcome back!')
         return redirect("/user/" + str(user.user_id))
     else:
+        flash('Incorrect password provided.')
         return redirect("/user-login")
 
 
@@ -64,10 +68,17 @@ def handle_user_login():
 def handle_user_registration():
     """Handles login and registration for new users."""
 
-    user = get_user()
+    email = request.form.get("email")
+    password = request.form.get("password")
+    first_name = request.form.get("fname")
+    last_name = request.form.get("lname")
+
+    user = get_user_by_email(email)
 
     if not user_exists(user):
-        new_user = register_user()
+        new_user = register_user(email, password, first_name, last_name)
+        session['user_id'] = user.user_id
+        flash('Welcome to Photo Spots!')
         return redirect("/user/" + str(new_user.user_id))
     else:
         flash('Sorry, that email is already registered. Please log in or create a new account.')

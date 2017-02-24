@@ -19,10 +19,9 @@ app.jinja_env.undefined = StrictUndefined
 google_maps_api_key = os.environ['GOOGLE_KEY']
 
 
-def get_user():
+def get_user(email):
     """Get user by email."""
 
-    email = request.form.get("email")
     user = User.query.filter(User.email == email).first()
 
     return user
@@ -61,34 +60,24 @@ def user_exists(user):
         return False
 
 
-def correct_password(user):
-    """Check if user entere the right password."""
-
-    password = request.form.get("password")
+def correct_password(user, password):
+    """Check if user entered the right password."""
 
     if user.password == password:
         session['user_id'] = user.user_id
-        flash('Welcome back!')
         return True
     else:
-        flash('Incorrect password provided.')
         return False
 
 
-def register_user():
+def register_user(email, password, first_name, last_name):
     """Add new user to database."""
-
-    email = request.form.get("email")
-    password = request.form.get("password")
-    first_name = request.form.get("fname")
-    last_name = request.form.get("lname")
 
     new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
     db.session.add(new_user)
     db.session.commit()
-    user = User.query.filter(User.email == email).one()
-    session['user_id'] = user.user_id
-    flash('Welcome to Photo Spots!')
+    new_user = User.query.filter(User.email == email).one()
+
     return new_user
 
 

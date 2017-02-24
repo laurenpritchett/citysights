@@ -42,6 +42,33 @@ class User(db.Model):
         return "<User user_id=%s email=%s>" % (self.user_id, self.email)
 
 
+class UserCity(db.Model):
+    """Middle table for User and City relationship."""
+
+    __tablename__ = "users_cities"
+
+    users_cities_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.user_id'))
+    city_id = db.Column(db.Integer,
+                        db.ForeignKey('cities.city_id'))
+    photo_id = db.Column(db.String(200),
+                         db.ForeignKey('photos.photo_id'))
+
+    user = db.relationship("User",
+                           backref=db.backref("users_cities",
+                                              order_by=users_cities_id))
+
+    city = db.relationship("City",
+                           backref=db.backref("users_cities",
+                                              order_by=users_cities_id))
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<UserCity users_cities_id=%s user=%s>" % (self.users_cities_id, self.user_id)
+
+
 class Photo(db.Model):
     """Photo saved by a user."""
 
@@ -49,10 +76,6 @@ class Photo(db.Model):
 
     photo_id = db.Column(db.String(200), primary_key=True)
     img_src = db.Column(db.String(200), nullable=False)
-    city_id = db.Column(db.Integer,
-                        db.ForeignKey('cities.city_id'))
-    user_id = db.Column(db.Integer,
-                        db.ForeignKey('users.user_id'))
 
     user = db.relationship("User",
                            backref=db.backref("photos",

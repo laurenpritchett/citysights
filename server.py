@@ -68,15 +68,12 @@ def handle_user_login():
 def handle_user_registration():
     """Handles login and registration for new users."""
 
-    email = request.form.get("email")
-    password = request.form.get("password")
-    first_name = request.form.get("fname")
-    last_name = request.form.get("lname")
+    user_info = request.form
 
-    user = get_user_by_email(email)
+    user = get_user_by_email(user_info['email'])
 
     if not user_exists(user):
-        new_user = register_user(email, password, first_name, last_name)
+        new_user = register_user(user_info)
         session['user_id'] = new_user.user_id
         flash('Welcome to Photo Spots!')
         return redirect("/user/" + str(new_user.user_id))

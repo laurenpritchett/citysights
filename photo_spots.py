@@ -70,8 +70,13 @@ def correct_password(user, password):
         return False
 
 
-def register_user(email, password, first_name, last_name):
+def register_user(user_info):
     """Add new user to database."""
+
+    password = user_info.get("password")
+    first_name = user_info.get("fname")
+    last_name = user_info.get("lname")
+    email = user_info.get("email")
 
     new_user = User(email=email, password=password, first_name=first_name, last_name=last_name)
     db.session.add(new_user)

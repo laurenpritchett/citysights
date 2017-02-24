@@ -9,7 +9,7 @@ from get_address import get_address_by_lat_lng
 
 from photo_spots import (user_exists, correct_password, get_user, register_user,
                          log_out, get_user_by_id, get_photos_by_user, get_city,
-                         is_saved)
+                         is_saved, save_photo_spot, remove_photo_spot)
 
 from jinja2 import StrictUndefined
 
@@ -151,16 +151,7 @@ def show_photo_and_location(photo_id):
 def save_photo():
     """Saves photo to database."""
 
-    img_src = request.form.get("src")
-    photo_id = request.form.get("id")
-    city_id = City.query.filter(City.name == session['city_name']).one().city_id
-    user_id = session['user_id']
-
-    print "city id is: ", city_id
-
-    new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
-    db.session.add(new_photo)
-    db.session.commit()
+    save_photo_spot()
 
     return "OK"
 
@@ -169,12 +160,7 @@ def save_photo():
 def remove_photo():
     """Removes photo from database."""
 
-    photo_id = request.form.get("id")
-    user_id = session['user_id']
-
-    photo = Photo.query.filter(Photo.photo_id == photo_id, Photo.user_id == user_id).first()
-    db.session.delete(photo)
-    db.session.commit()
+    remove_photo_spot()
 
     return "OK"
 

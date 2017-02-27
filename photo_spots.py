@@ -9,7 +9,6 @@ from flask import (Flask, request, flash,
 
 from model import City, User, Photo, UserCity, db
 
-
 app = Flask(__name__)
 
 app.secret_key = "ABC"

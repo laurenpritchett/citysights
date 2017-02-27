@@ -63,6 +63,10 @@ class UserCity(db.Model):
                            backref=db.backref("users_cities",
                                               order_by=users_cities_id))
 
+    photo = db.relationship("Photo",
+                            backref=db.backref("users_cities",
+                                               order_by=users_cities_id))
+
     def __repr__(self):
         """Provide helpful representation when printed."""
 
@@ -76,14 +80,6 @@ class Photo(db.Model):
 
     photo_id = db.Column(db.String(200), primary_key=True)
     img_src = db.Column(db.String(200), nullable=False)
-
-    user = db.relationship("User",
-                           backref=db.backref("photos",
-                                              order_by=photo_id))
-
-    city = db.relationship("City",
-                           backref=db.backref("photos",
-                                              order_by=photo_id))
 
     def __repr__(self):
         """Provide helpful representation when printed."""

@@ -7,7 +7,7 @@ from jinja2 import StrictUndefined
 from flask import (Flask, request, flash,
                    session)
 
-from model import City, User, Photo, db
+from model import City, User, Photo, UserCity, db
 
 
 app = Flask(__name__)
@@ -37,13 +37,13 @@ def get_user_by_id(user_id):
 def get_photos_by_user(user_id):
     """Get saved photo spots by user."""
 
-    saved_photos = Photo.query.filter(Photo.user_id == user_id).all()
+    saved_photos = UserCity.query.filter(UserCity.user_id == user_id).all()
 
     saved_photos_info = []
 
     for saved_photo in saved_photos:
         saved_photos_info.append({'photo_id': saved_photo.photo_id,
-                                  'img_src': saved_photo.img_src,
+                                  'img_src': saved_photo.photo.img_src,
                                   'city_id': saved_photo.city_id,
                                   'user_id': saved_photo.user_id
                                   })
@@ -106,16 +106,20 @@ def save_photo_spot(img_src, photo_id, user_id):
 
     city_id = City.query.filter(City.name == session['city_name']).one().city_id
 
-    new_photo = Photo(img_src=img_src, photo_id=photo_id, city_id=city_id, user_id=user_id)
-    db.session.add(new_photo)
+    new_user_city = UserCity(user_id=user_id, photo_id=photo_id, city_id=city_id)
+
+    if not Photo.query.filter(Photo.photo_id == photo_id).all():
+        new_photo = Photo(img_src=img_src, photo_id=photo_id)
+        db.session.add(new_photo)
+    db.session.add(new_user_city)
     db.session.commit()
 
 
 def is_saved(photo_id):
     """Check if photo spot has been saved by current user."""
 
-    saved = Photo.query.filter(Photo.user_id == session['user_id'],
-                               Photo.photo_id == photo_id).first()
+    saved = UserCity.query.filter(UserCity.user_id == session['user_id'],
+                                  UserCity.photo_id == photo_id).first()
 
     return saved
 
@@ -123,6 +127,6 @@ def is_saved(photo_id):
 def remove_photo_spot(photo_id, user_id):
     """Remove photo from database."""
 
-    photo = Photo.query.filter(Photo.photo_id == photo_id, Photo.user_id == user_id).first()
+    photo = UserCity.query.filter(UserCity.photo_id == photo_id, UserCity.user_id == user_id).first()
     db.session.delete(photo)
     db.session.commit()

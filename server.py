@@ -91,6 +91,7 @@ def logout():
     return redirect("/user-login")
 
 
+# Need to optimize logic so that photos are divided by city
 @app.route('/user/<user_id>')
 def user_page(user_id):
     """Show user profile."""
@@ -169,6 +170,7 @@ def save_photo():
     return "OK"
 
 
+# Fix logic here
 @app.route('/remove-photo', methods=["POST"])
 def remove_photo():
     """Removes photo from database."""

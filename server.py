@@ -57,6 +57,7 @@ def handle_user_login():
         return redirect("/user-login")
 
     if correct_password(user, password):
+        session['user_id'] = user.user_id
         flash('Welcome back!')
         return redirect("/user/" + str(user.user_id))
     else:
@@ -86,7 +87,8 @@ def handle_user_registration():
 def logout():
     """Remove user_id from session and redirect to the home page."""
 
-    log_out()
+    del session['user_id']
+    flash('See you later!')
 
     return redirect("/user-login")
 

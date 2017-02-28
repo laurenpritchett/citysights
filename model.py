@@ -100,6 +100,46 @@ def connect_to_db(app):
     db.init_app(app)
 
 
+def example_data():
+    """Create some sample data."""
+
+    paris = City(name='Paris',
+                 lat=48.86669293,
+                 lng=2.333335326,
+                 country='France',
+                 iso2='FR',
+                 province='Ile-de-France')
+    tokyo = City(name='Tokyo',
+                 lat=35.68501691,
+                 lng=139.7514074,
+                 country='Japan',
+                 iso2='JP',
+                 province='Tokyo')
+    seattle = City(name='Seattle',
+                   lat=47.57000205,
+                   lng=-122.339985,
+                   country='United States of America',
+                   iso2='US',
+                   province='Washington')
+
+    karen = User(first_name='karen',
+                 last_name='smith',
+                 email='ksmith@gmail.com',
+                 password='happy123')
+    bob = User(first_name='bob',
+               last_name='johnson',
+               email='bjohnson@gmail.com',
+               password='umbrella24')
+    sally = User(first_name='sally',
+                 last_name='smith',
+                 email='ksmith@gmail.com',
+                 password='happy123')
+
+    db.session.add_all([paris, tokyo, seattle, karen, bob, sally])
+
+
+
+
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave
     # you in a state of being able to work with the database directly.

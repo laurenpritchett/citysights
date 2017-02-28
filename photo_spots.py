@@ -63,7 +63,6 @@ def correct_password(user, password):
     """Check if user entered the right password."""
 
     if user.password == password:
-        session['user_id'] = user.user_id
         return True
     else:
         return False
@@ -83,13 +82,6 @@ def register_user(user_info):
     new_user = User.query.filter(User.email == email).one()
 
     return new_user
-
-
-def log_out():
-    """Remove user from session."""
-
-    del session['user_id']
-    flash('See you later!')
 
 
 def get_city(search):

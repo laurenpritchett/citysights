@@ -4,8 +4,7 @@ import os
 
 from jinja2 import StrictUndefined
 
-from flask import (Flask, request, flash,
-                   session)
+from flask import (Flask, session)
 
 from model import City, User, Photo, UserCity, db
 
@@ -95,7 +94,7 @@ def get_city(search):
 def save_photo_spot(img_src, photo_id, user_id):
     """Save photo to database."""
 
-    city_id = City.query.filter(City.name == session['city_name']).one().city_id
+    city_id = session['city_id']
 
     new_user_city = UserCity(user_id=user_id, photo_id=photo_id, city_id=city_id)
 

@@ -35,7 +35,7 @@ def get_photos_by_location(lat, lon):
 
 
 def get_photo_location(photo_id):
-    """Get lat/lon"""
+    """Get lat/lng"""
 
     location_details = {}
 
@@ -44,6 +44,7 @@ def get_photo_location(photo_id):
 
     location_details['lat'] = location_info['photo']['location']['latitude']
     location_details['lng'] = location_info['photo']['location']['longitude']
+    location_details['name'] = location_info['photo']['location']['locality']['_content']
 
     return location_details
 

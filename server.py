@@ -8,7 +8,7 @@ from get_photos import (get_photos_by_location,
 from get_address import get_address_by_lat_lng
 
 from photo_spots import (user_exists, correct_password, get_user_by_email, register_user,
-                         log_out, get_user_by_id, get_photos_by_user, get_city,
+                         get_user_by_id, get_photos_by_user, get_city,
                          is_saved, save_photo_spot, remove_photo_spot)
 
 from jinja2 import StrictUndefined
@@ -117,10 +117,10 @@ def search_city():
 
     if city is not None:
         name = city.name
-        session['city_name'] = name
         lat = city.lat
         lng = city.lng
         city_id = city.city_id
+        session['city_id'] = city_id
         url_pairs = get_photos_by_location(lat, lng)
 
     else:
@@ -144,6 +144,13 @@ def show_photo_and_location(photo_id):
 
     lat = location_details['lat']
     lng = location_details['lng']
+    name = location_details['name']
+
+    print "***********************************", location_details
+
+    city_id = get_city(name).city_id
+
+    session['city_id'] = city_id
 
     address = get_address_by_lat_lng(lat, lng)
 

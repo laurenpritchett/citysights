@@ -1,9 +1,32 @@
 import unittest
 from server import app
 import photo_spots
+import model
 
 
-class FunctionTests(unittest.TestCase):
+class DatabaseTests(unittest.TestCase):
+    def setUp(self):
+        """Perform these items before every test."""
+
+        model.connect_to_db(app, "postgresql:///testdb")
+
+        model.db.create_all()
+        model.example_data()
+
+    def tearDown(self):
+        """Do at end of every test."""
+
+        model.db.session.close()
+        model.db.drop_all()
+
+    def test_register_user(self):
+        user_info = {'fname': 'Jamie', 'password': 'happy33',
+                     'lname': 'Nelson', 'email': 'jnelson@gmail.com'}
+
+        assert photo_spots.register_user(user_info)
+
+
+class FunctionalTests(unittest.TestCase):
 
     def test_user_exists(self):
         assert photo_spots.user_exists('<User user_id=1 email=bcruz@gmail.com>') is True

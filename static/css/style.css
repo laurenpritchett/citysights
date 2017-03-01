@@ -6,9 +6,15 @@ h3 {
     text-align: center;
 }
 
-.photos{
-    max-width: 500px;
-    margin: auto;
+.photo-results{
+    max-width: 450px;
+    margin: 0
+    0em 0em;
+}
+
+.saved-photos{
+    max-width: 450px;
+    margin: 0em 0em;    
 }
 
 .form {

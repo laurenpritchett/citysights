@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h1>Search Results</h1><br>
-
 {% if name is not none %}
-  <h1>{{ name }} Photos</h1>
-
-  <h3>Not what you were looking for? Try another search, like "Berlin" or "San Francisco"</h3><br>
-
-  <h3>Click on a photo to see location information!</h3><br><br>
+  <h3>{{ name }} Photos</h3>
 
   <section id="search-results">
     {% for photo_id, link, photo in url_pairs %}
-      <a href="/photo-details/{{ photo_id }}"><img src="{{ photo }}" id="{{ photo_id }}"></a><br>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 photo-results">
+      <a href="/photo-details/{{ photo_id }}" class="thumbnail">
+        <img src="{{ photo }}" id="{{ photo_id }}" class="img-responsive">
+      </a><br>
       <a href="{{ link }}">Photo Source</a><br><br><br>
+    </div>
     {% endfor %}
   </section>
 {% else %}

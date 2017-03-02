@@ -6,14 +6,19 @@ h3 {
     text-align: center;
 }
 
+.img-responsive {
+  max-height: 300px;
+}
 .photo-results{
-    max-width: 450px;
+    max-width: 500px;
+    max-height: 450px;
     margin: 0
     0em 0em;
 }
 
 .saved-photos{
-    max-width: 450px;
+    max-width: 500px;
+    max-height: 450px;
     margin: 0em 0em;    
 }
 
@@ -75,16 +80,17 @@ h3 {
     padding: 5px 11px 0px 11px;
 }
 
-.form-signin {
+.form-signin, .form-register {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
-.form-signin .form-signin-heading,
-.form-signin {
+.form-signin, .form-signin-heading,
+.form-signin, .form-register{
   margin-bottom: 10px;
 }
-.form-signin .form-control {
+.form-signin, .form-control,
+.form-register {
   position: relative;
   height: auto;
   -webkit-box-sizing: border-box;
@@ -93,15 +99,19 @@ h3 {
   padding: 10px;
   font-size: 16px;
 }
-.form-signin .form-control:focus {
+.form-signin, .form-control:focus,
+.form-register {
   z-index: 2;
 }
-.form-signin input[type="email"] {
+.form-signin input[type="email"],
+.form-register input[type="email"],
+.form-register input[type="text"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.form-signin input[type="password"] {
+.form-signin input[type="password"],
+.form-register input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;

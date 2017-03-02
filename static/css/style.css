@@ -6,8 +6,10 @@ h3 {
     text-align: center;
 }
 
-.img-responsive {
+.img-responsive, .thumbnail {
   max-height: 300px;
+  max-width: 450px;
+  min-height: 300px;
 }
 .photo-results{
     max-width: 500px;

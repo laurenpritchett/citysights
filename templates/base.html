@@ -25,7 +25,7 @@
         <span class="icon-bar"></span>
       </button>
       {% if 'user_id' in session %}
-        <a class="navbar-brand" href="/user/{{ session['user_id'] }}">Photo Spots</a>
+        <a class="navbar-brand" href="/user/{{ session['user_id'] }}">{{ session['name']}}'s Photo Spots</a>
       {% else %}
         <a class="navbar-brand" href="/">Photo Spots</a>
       {% endif %}

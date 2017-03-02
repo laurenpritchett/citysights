@@ -58,6 +58,7 @@ def handle_user_login():
 
     if correct_password(user, password):
         session['user_id'] = user.user_id
+        session['name'] = user.first_name
         flash('Welcome back!')
         return redirect("/user/" + str(user.user_id))
     else:
@@ -104,7 +105,7 @@ def user_page(user_id):
 
     return render_template("user-profile.html",
                            current_user=current_user,
-                           saved_photos_info=saved_photos_info
+                           saved_photos_info=saved_photos_info,
                            )
 
 

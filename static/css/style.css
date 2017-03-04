@@ -6,22 +6,24 @@ h3 {
     text-align: center;
 }
 
-.img-responsive, .thumbnail {
+.img-responsive{
   max-height: 300px;
   max-width: 450px;
   min-height: 300px;
+  min-width: 439.79px;
+  padding-bottom: 1px;
 }
+
 .photo-results{
     max-width: 500px;
     max-height: 450px;
-    margin: 0
-    0em 0em;
+    margin: 0;
 }
 
 .saved-photos{
     max-width: 500px;
     max-height: 450px;
-    margin: 0em 0em;    
+    margin: 0;    
 }
 
 .form {

@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h3>{{ current_user.first_name }}'s Saved Photo Spots</h3><br>
-
 {% for saved_photo_info in saved_photos_info %}
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 saved-photos">
   <a href="/photo-details/{{ saved_photo_info['photo_id'] }}" class="thumbnail">

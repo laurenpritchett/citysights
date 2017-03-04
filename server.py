@@ -77,6 +77,7 @@ def handle_user_registration():
     if not user_exists(user):
         new_user = register_user(user_info)
         session['user_id'] = new_user.user_id
+        session['name'] = new_user.first_name
         flash('Welcome to Photo Spots!')
         return redirect("/user/" + str(new_user.user_id))
     else:
@@ -91,7 +92,7 @@ def logout():
     del session['user_id']
     flash('See you later!')
 
-    return redirect("/user-login")
+    return redirect("/")
 
 
 # Need to optimize logic so that photos are divided by city
@@ -147,8 +148,6 @@ def show_photo_and_location(photo_id):
     lng = location_details['lng']
     name = location_details['name']
 
-    print "***********************************", location_details
-
     city_id = get_city(name).city_id
 
     session['city_id'] = city_id
@@ -180,7 +179,6 @@ def save_photo():
     return "OK"
 
 
-# Fix logic here
 @app.route('/remove-photo', methods=["POST"])
 def remove_photo():
     """Removes photo from database."""

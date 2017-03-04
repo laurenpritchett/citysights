@@ -101,6 +101,7 @@ def save_photo_spot(img_src, photo_id, user_id):
     if not Photo.query.filter(Photo.photo_id == photo_id).all():
         new_photo = Photo(img_src=img_src, photo_id=photo_id)
         db.session.add(new_photo)
+
     db.session.add(new_user_city)
     db.session.commit()
 

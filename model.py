@@ -24,6 +24,10 @@ class City(db.Model):
 
         return "<City id=%s name=%s country=%s>" % (self.city_id, self.name, self.country)
 
+    @classmethod
+    def by_id(cls, city_id):
+        return cls.query.filter_by(city_id=city_id).first()
+
 
 class User(db.Model):
     """User of photo spots website."""
@@ -40,6 +44,10 @@ class User(db.Model):
         """Provide helpful representation when printed."""
 
         return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+
+    @classmethod
+    def by_id(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).first()
 
 
 class UserCity(db.Model):
@@ -72,6 +80,10 @@ class UserCity(db.Model):
 
         return "<UserCity users_cities_id=%s user=%s>" % (self.users_cities_id, self.user_id)
 
+    @classmethod
+    def by_id(cls, users_cities_id):
+        return cls.query.filter_by(users_cities_id=users_cities_id).first()
+
 
 class Photo(db.Model):
     """Photo saved by a user."""
@@ -85,6 +97,10 @@ class Photo(db.Model):
         """Provide helpful representation when printed."""
 
         return "<Photo photo_id=%s img_src=%s>" % (self.photo_id, self.img_src)
+
+    @classmethod
+    def by_id(cls, photo_id):
+        return cls.query.filter_by(photo_id=photo_id).first()    
 
 
 ################################################################################

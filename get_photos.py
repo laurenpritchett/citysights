@@ -1,3 +1,5 @@
+"""Functions for Flickr API requests."""
+
 import flickrapi
 import json
 import os
@@ -12,7 +14,7 @@ def get_photos_by_location(lat, lon):
     """Get URL for interesting photos with specified latitude and longitude."""
     url_pairs = []
 
-    photos = flickr.photos.search(per_page='9', format='json', lat=lat, lon=lon,
+    photos = flickr.photos.search(per_page='12', format='json', lat=lat, lon=lon,
                                   sort='interestingness-desc')
 
     photo_info = json.loads(photos)

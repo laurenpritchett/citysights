@@ -100,7 +100,7 @@ class Photo(db.Model):
 
     @classmethod
     def by_id(cls, photo_id):
-        return cls.query.filter_by(photo_id=photo_id).first()    
+        return cls.query.filter_by(photo_id=photo_id).first()
 
 
 ################################################################################

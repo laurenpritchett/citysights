@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% for saved_city in saved_cities %}
+    <ul>
+        <li>{{saved_city}}</li>
+    </ul>
+    <br>
+{% endfor %}
+
 {% for saved_photo_info in saved_photos_info %}
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 saved-photos">
   <a href="/photo-details/{{ saved_photo_info['photo_id'] }}" class="thumbnail">

@@ -78,7 +78,9 @@ class UserCity(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<UserCity users_cities_id=%s user=%s>" % (self.users_cities_id, self.user_id)
+        return "<UserCity users_cities_id=%s user=%s city=%s>" % (self.users_cities_id,
+                                                                  self.user_id,
+                                                                  self.city_id)
 
     @classmethod
     def by_id(cls, users_cities_id):

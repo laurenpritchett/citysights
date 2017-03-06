@@ -49,6 +49,23 @@ def get_photos_by_user(user_id):
     return saved_photos_info
 
 
+def get_cities_by_user(user_id):
+    """Get saved cities by user."""
+
+    saved_photos = UserCity.query.filter(UserCity.user_id == user_id).all()
+
+    saved_city_ids = set()
+    for i in saved_photos:
+        saved_city_ids.add(i.city_id)
+
+    saved_cities = []
+    for i in saved_city_ids:
+
+        saved_cities.append(City.query.filter(City.city_id == i).first().name)
+
+    return saved_cities
+
+
 def user_exists(user):
     """Check if user exists in database."""
 

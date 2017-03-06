@@ -9,7 +9,7 @@ from get_address import get_address_by_lat_lng
 
 from photo_spots import (user_exists, correct_password, get_user_by_email, register_user,
                          get_user_by_id, get_photos_by_user, get_city,
-                         is_saved, save_photo_spot, remove_photo_spot)
+                         is_saved, save_photo_spot, remove_photo_spot, get_cities_by_user)
 
 from jinja2 import StrictUndefined
 
@@ -104,9 +104,12 @@ def user_page(user_id):
 
     saved_photos_info = get_photos_by_user(user_id)
 
+    saved_cities = get_cities_by_user(user_id)
+
     return render_template("user-profile.html",
                            current_user=current_user,
                            saved_photos_info=saved_photos_info,
+                           saved_cities=saved_cities,
                            )
 
 

@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="container-fluid" id="homepage">
 
 {% if 'user_id' not in session %}
-<h3>Create an account or log in to discover the world's best photo locations!</h3>
+<br><br>
+<h1 class="home-text">Welcome to <strong>City Sights</strong>, home of the world's best photo locations!</h1>
+<br><br><br><br><br><br>
 
 <div class="container">
 
   <form class="form-signin" action='/user-registration' method='POST'>
-    <h2 class="form-signin-heading">Registration</h2>
+    <h2 class="form-signin-heading home-text">Registration</h2>
     <label for="firstName" class="sr-only">First name</label>
     <input type="text" id="inputFirst" name="fname" class="form-control" placeholder="First name" required autofocus>
     <label for="lastName" class="sr-only">Last name</label>
@@ -21,9 +24,15 @@
   </form>
 
 </div> <!-- /container -->
-
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% else %}
+<br><br>
+<h1 class="home-text">Welcome to <strong>City Sights</strong>, home of the world's best photo locations!</h1>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 {% endif %}
+</div>
 
 <script>
 $('#myModal').modal('show');

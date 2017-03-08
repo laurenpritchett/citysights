@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+<div class="container-fluid" id="profile">
 {% for saved_photo_info in saved_photos_info %}
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 saved-photos">
   <a href="/photo-details/{{ saved_photo_info['photo_id'] }}" class="thumbnail">
     <img src="{{ saved_photo_info['img_src'] }}" 
-    id="{{ saved_photo_info['photo_id'] }}" class="img-responsive center-block"></a><br><br>
+    id="{{ saved_photo_info['photo_id'] }}" class="img-responsive center-block"></a>
 </div>
 {% endfor %}
-
+</div>
   
 {% endblock %}

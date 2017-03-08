@@ -1,26 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Photo Details</h1>
+<div class="container-fluid" id="details">
 
 <h3 id="photo-id">{{ photo_id }}<h3>
 
-<div class="photos">
 
-  <img src="{{ img_src }}" id="photo-details"><br><br>
+  <img src="{{ img_src }}" class="photo-details"><br>
 
   {% if saved is none %}
     <button type="button" class="btn btn-default btn-lg" id="love" title="Favorite">
       <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-    </button><br><br>
+    </button><br>
   {% elif saved is not none %}
     <button type="button" class="btn btn-default btn-lg" id="unlove" title="Unfavorite">
       <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-    </button><br><br>
+    </button><br>
   {% endif %}
-</div>
 
-<h3>Location: <a href="http://maps.google.com/?q={{ address}}">{{ address }} </a></h3>
+<h3>Photo Location: <a href="http://maps.google.com/?q={{ address}}">{{ address }} </a></h3>
 
 <input id="origin-input" class="controls" type="text"
   placeholder="Enter an origin location">
@@ -40,20 +38,19 @@
 </div>
 
 <div id="map"></div><br><br>
-
+</div>
 <script>
 
   function fillHeartButton() {
     $("button#love").replaceWith('<button type="button" class="btn btn-default btn-lg" id="unlove"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></button>');
     $("button#unlove").on("click", removePhoto)
-    alert('Saved to Photo Spots!')
   }
 
   function savePhoto(evt) {
     console.log('in save photo');
 
     var photoDetails = {
-      "src": $("img#photo-details").attr("src"),
+      "src": $("img.photo-details").attr("src"),
       "id": $("h3#photo-id").html()
     };
 
@@ -69,7 +66,6 @@
   function emptyHeartButton() {
     $("button#unlove").replaceWith('<button type="button" class="btn btn-default btn-lg" id="love"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></button>');
     $("button#love").on("click", savePhoto)
-    alert('Removed from Photo Spots!')
   }
 
   function removePhoto(evt) {

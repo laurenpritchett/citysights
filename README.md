@@ -14,5 +14,12 @@ Python, JavaScript, Flask, HTML, CSS, PostgreSQL, SQLAlchemy, Python flickrapi l
 ### Search Cities
 ![search](/screenshots/paris.png)
 
-### Save City Sights to Profile
+### Favorite City Sights
+![favorite](/screenshots/favorite.png)
+
+
+### Get Directions to City Sight Location
+![map](/screenshots/map.png)
+
+### View Saved City Sights in Profile
 ![profile](/screenshots/profile.png "Profile")

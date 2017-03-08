@@ -9,10 +9,10 @@ Python, JavaScript, Flask, HTML, CSS, PostgreSQL, SQLAlchemy, Python flickrapi l
 # Features
 
 ### Sign Up
-![homepage](https://github.com/laurenpritchett/citysights/screenshots/home.png "Home Page")
+![homepage](/screenshots/home.png)
 
 ### Search Cities
-![search](https://github.com/laurenpritchett/citysights/screenshots/paris.png "Paris Search")
+![search](/screenshots/paris.png)
 
 ### Save City Sights to Profile
-![profile](https://github.com/laurenpritchett/citysights/screenshots/profile.png "Profile")
+![profile](/screenshots/profile.png "Profile")

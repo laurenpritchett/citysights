@@ -8,7 +8,6 @@ h1, h2, h3 {
   max-height: 300px;
   max-width: 450px;
   min-height: 300px;
-  min-width: 439.79px;
   padding-bottom: 1px;
 }
 
@@ -39,7 +38,6 @@ h1, h2, h3 {
 .photo-details {
     margin: auto;
     text-align: center;
-    width: 60%;
 }
 
 #map {

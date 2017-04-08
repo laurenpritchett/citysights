@@ -95,7 +95,7 @@ def logout():
     return redirect("/")
 
 
-# Need to optimize logic so that photos are divided by city
+# TODO: optimize logic so that photos are divided by city
 @app.route('/user/<user_id>')
 def user_page(user_id):
     """Show user profile."""
@@ -113,6 +113,7 @@ def user_page(user_id):
                            )
 
 
+# TODO: paginate search results
 @app.route('/search-results')
 def search_city():
     """Return photo results from city search."""

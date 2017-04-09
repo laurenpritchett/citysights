@@ -6,7 +6,7 @@ from jinja2 import StrictUndefined
 
 from flask import (Flask, session)
 
-from model import City, User, Photo, UserCity, db
+from model import User, Photo, UserPhoto, db
 
 app = Flask(__name__)
 
@@ -35,35 +35,17 @@ def get_user_by_id(user_id):
 def get_photos_by_user(user_id):
     """Get saved photo spots by user."""
 
-    saved_photos = UserCity.query.filter(UserCity.user_id == user_id).all()
+    saved_photos = UserPhoto.query.filter(UserPhoto.user_id == user_id).all()
 
     saved_photos_info = []
 
     for saved_photo in saved_photos:
         saved_photos_info.append({'photo_id': saved_photo.photo_id,
                                   'img_src': saved_photo.photo.img_src,
-                                  'city_id': saved_photo.city_id,
                                   'user_id': saved_photo.user_id
                                   })
 
     return saved_photos_info
-
-
-def get_cities_by_user(user_id):
-    """Get saved cities by user."""
-
-    saved_photos = UserCity.query.filter(UserCity.user_id == user_id).all()
-
-    saved_city_ids = set()
-    for i in saved_photos:
-        saved_city_ids.add(i.city_id)
-
-    saved_cities = []
-    for i in saved_city_ids:
-
-        saved_cities.append(City.query.filter(City.city_id == i).first().name)
-
-    return saved_cities
 
 
 def user_exists(user):
@@ -100,34 +82,26 @@ def register_user(user_info):
     return new_user
 
 
-def get_city(search):
-    """Get city from search."""
-
-    city_search = '%{}%'.format(search)
-    city = City.query.filter(City.name.ilike(city_search)).first()
-    return city
-
-
 def save_photo_spot(img_src, photo_id, user_id):
     """Save photo to database."""
 
-    city_id = session['city_id']
+    # city_id = session['city_id']
 
-    new_user_city = UserCity(user_id=user_id, photo_id=photo_id, city_id=city_id)
+    new_user_photo = UserPhoto(user_id=user_id, photo_id=photo_id)
 
     if not Photo.query.filter(Photo.photo_id == photo_id).all():
         new_photo = Photo(img_src=img_src, photo_id=photo_id)
         db.session.add(new_photo)
 
-    db.session.add(new_user_city)
+    db.session.add(new_user_photo)
     db.session.commit()
 
 
 def is_saved(photo_id):
     """Check if photo spot has been saved by current user."""
 
-    saved = UserCity.query.filter(UserCity.user_id == session['user_id'],
-                                  UserCity.photo_id == photo_id).first()
+    saved = UserPhoto.query.filter(UserPhoto.user_id == session['user_id'],
+                                   UserPhoto.photo_id == photo_id).first()
 
     return saved
 
@@ -135,6 +109,6 @@ def is_saved(photo_id):
 def remove_photo_spot(photo_id, user_id):
     """Remove photo from database."""
 
-    photo = UserCity.query.filter(UserCity.photo_id == photo_id, UserCity.user_id == user_id).first()
+    photo = UserPhoto.query.filter(UserPhoto.photo_id == photo_id, UserPhoto.user_id == user_id).first()
     db.session.delete(photo)
     db.session.commit()

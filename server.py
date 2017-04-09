@@ -7,9 +7,10 @@ from get_photos import (get_photos_by_location,
 
 from get_address import get_address_by_lat_lng, get_lat_lng_by_city
 
-from photo_spots import (user_exists, correct_password, get_user_by_email, register_user,
-                         get_user_by_id, get_photos_by_user, get_city,
-                         is_saved, save_photo_spot, remove_photo_spot, get_cities_by_user)
+from photo_spots import (user_exists, correct_password, get_user_by_email,
+                         register_user, get_user_by_id, get_photos_by_user,
+                         is_saved, save_photo_spot, remove_photo_spot,
+                         )
 
 from jinja2 import StrictUndefined
 
@@ -104,12 +105,9 @@ def user_page(user_id):
 
     saved_photos_info = get_photos_by_user(user_id)
 
-    saved_cities = get_cities_by_user(user_id)
-
     return render_template("user-profile.html",
                            current_user=current_user,
                            saved_photos_info=saved_photos_info,
-                           saved_cities=saved_cities,
                            )
 
 
@@ -130,22 +128,10 @@ def search_city():
         name = None
         url_pairs = None
 
-    # if city is not None:
-    #     name = city.name
-    #     lat = city.lat
-    #     lng = city.lng
-    #     city_id = city.city_id
-    #     session['city_id'] = city_id
-    #     url_pairs = get_photos_by_location(lat, lng)
-
-    # else:
-    #     name = None
-    #     url_pairs = None
-    #     city_id = None
-
     return render_template("search-results.html",
                            name=name,
-                           url_pairs=url_pairs
+                           url_pairs=url_pairs,
+                           search=search,
                            )
 
 
@@ -159,15 +145,10 @@ def show_photo_and_location(photo_id):
 
     lat = location_details['lat']
     lng = location_details['lng']
-    # name = location_details['name']
-
-    # city_id = get_city(name).city_id
-
-    # session['city_id'] = city_id
 
     address = get_address_by_lat_lng(lat, lng)
 
-    # saved = is_saved(photo_id)
+    saved = is_saved(photo_id)
 
     return render_template("photo-details.html",
                            img_src=img_src,
@@ -176,6 +157,7 @@ def show_photo_and_location(photo_id):
                            lng=lng,
                            address=address,
                            google_maps_api_key=google_maps_api_key,
+                           saved=saved,
                            )
 
 

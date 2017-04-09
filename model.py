@@ -6,29 +6,6 @@ db = SQLAlchemy()
 ################################################################################
 # Model definition
 
-class City(db.Model):
-    """City with location information."""
-
-    __tablename__ = "cities"
-
-    city_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(33), nullable=False)
-    lat = db.Column(db.Float, nullable=False)
-    lng = db.Column(db.Float, nullable=False)
-    country = db.Column(db.String(32), nullable=False)
-    iso2 = db.Column(db.String(3), nullable=False)
-    province = db.Column(db.String(43), nullable=False)
-
-    def __repr__(self):
-        """Provide helpful representation when printed."""
-
-        return "<City id=%s name=%s country=%s>" % (self.city_id, self.name, self.country)
-
-    @classmethod
-    def by_id(cls, city_id):
-        return cls.query.filter_by(city_id=city_id).first()
-
-
 class User(db.Model):
     """User of photo spots website."""
 
@@ -50,41 +27,24 @@ class User(db.Model):
         return cls.query.filter_by(user_id=user_id).first()
 
 
-class UserCity(db.Model):
-    """Middle table for User and City relationship."""
+class UserPhoto(db.Model):
+    """Middle table for User and Photo relationship."""
 
-    __tablename__ = "users_cities"
+    __tablename__ = "users_photos"
 
-    users_cities_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    users_photos_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'))
-    city_id = db.Column(db.Integer,
-                        db.ForeignKey('cities.city_id'))
     photo_id = db.Column(db.String(200),
                          db.ForeignKey('photos.photo_id'))
 
     user = db.relationship("User",
-                           backref=db.backref("users_cities",
-                                              order_by=users_cities_id))
-
-    city = db.relationship("City",
-                           backref=db.backref("users_cities",
-                                              order_by=users_cities_id))
+                           backref=db.backref("users_photos",
+                                              order_by=users_photos_id))
 
     photo = db.relationship("Photo",
-                            backref=db.backref("users_cities",
-                                               order_by=users_cities_id))
-
-    def __repr__(self):
-        """Provide helpful representation when printed."""
-
-        return "<UserCity users_cities_id=%s user=%s city=%s>" % (self.users_cities_id,
-                                                                  self.user_id,
-                                                                  self.city_id)
-
-    @classmethod
-    def by_id(cls, users_cities_id):
-        return cls.query.filter_by(users_cities_id=users_cities_id).first()
+                            backref=db.backref("users_photos",
+                                               order_by=users_photos_id))
 
 
 class Photo(db.Model):
@@ -104,9 +64,9 @@ class Photo(db.Model):
     def by_id(cls, photo_id):
         return cls.query.filter_by(photo_id=photo_id).first()
 
-
 ################################################################################
 # Helper functions
+
 
 def connect_to_db(app, db_uri='postgresql:///hbproject'):
     """Connect the database to our Flask app."""
@@ -120,26 +80,6 @@ def connect_to_db(app, db_uri='postgresql:///hbproject'):
 
 def example_data():
     """Create some sample data."""
-
-    paris = City(name='Paris',
-                 lat=48.86669293,
-                 lng=2.333335326,
-                 country='France',
-                 iso2='FR',
-                 province='Ile-de-France')
-    tokyo = City(name='Tokyo',
-                 lat=35.68501691,
-                 lng=139.7514074,
-                 country='Japan',
-                 iso2='JP',
-                 province='Tokyo')
-    seattle = City(name='Seattle',
-                   lat=47.57000205,
-                   lng=-122.339985,
-                   country='United States of America',
-                   iso2='US',
-                   province='Washington')
-
     karen = User(first_name='karen',
                  last_name='smith',
                  email='ksmith@gmail.com',
@@ -153,7 +93,7 @@ def example_data():
                  email='ksmith@gmail.com',
                  password='happy123')
 
-    db.session.add_all([paris, tokyo, seattle, karen, bob, sally])
+    db.session.add_all([karen, bob, sally])
     db.session.commit()
 
 

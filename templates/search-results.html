@@ -15,7 +15,7 @@
     {% endfor %}
   </section>
 {% else %}
-  <h3> Sorry, that city is not in our database! Please try another search.</h3>
+  <h3> Sorry, {{ search }} did not return any results. Please try another search.</h3>
 {% endif %}
 
 {% endblock %}

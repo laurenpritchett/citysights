@@ -24,12 +24,17 @@ def get_address_by_lat_lng(lat, lng):
     return reverse_geocode_result[0]['formatted_address']
 
 
-def get_lat_long_by_city(city_name):
+def get_lat_lng_by_city(city_name):
     """Get the latitude and longitude of a given city."""
 
     geocode_result = gmaps.geocode(city_name)
 
-    return geocode_result[0]['geometry']['location']
+    if geocode_result == []:
+        return None
+
+    return (geocode_result[0]['geometry']['location']['lat'],
+            geocode_result[0]['geometry']['location']['lng']
+            )
 
 # print get_address_by_lat_lng(37.808480, -122.475853)
-print get_lat_long_by_city('Paris, France')
+# print get_lat_lng_by_city('Paris, France')

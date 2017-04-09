@@ -5,7 +5,7 @@ import os
 from get_photos import (get_photos_by_location,
                         get_photo_location, get_photo_url)
 
-from get_address import get_address_by_lat_lng
+from get_address import get_address_by_lat_lng, get_lat_lng_by_city
 
 from photo_spots import (user_exists, correct_password, get_user_by_email, register_user,
                          get_user_by_id, get_photos_by_user, get_city,
@@ -119,25 +119,34 @@ def search_city():
     """Return photo results from city search."""
 
     search = request.args.get('city-search')
-    city = get_city(search)
+    lat_lng = get_lat_lng_by_city(search)
 
-    if city is not None:
-        name = city.name
-        lat = city.lat
-        lng = city.lng
-        city_id = city.city_id
-        session['city_id'] = city_id
+    if lat_lng is not None:
+        name = search
+        lat, lng = lat_lng
         url_pairs = get_photos_by_location(lat, lng)
 
     else:
         name = None
         url_pairs = None
-        city_id = None
+
+    # if city is not None:
+    #     name = city.name
+    #     lat = city.lat
+    #     lng = city.lng
+    #     city_id = city.city_id
+    #     session['city_id'] = city_id
+    #     url_pairs = get_photos_by_location(lat, lng)
+
+    # else:
+    #     name = None
+    #     url_pairs = None
+    #     city_id = None
 
     return render_template("search-results.html",
                            name=name,
-                           url_pairs=url_pairs,
-                           city_id=city_id)
+                           url_pairs=url_pairs
+                           )
 
 
 @app.route('/photo-details/<photo_id>')
@@ -150,15 +159,15 @@ def show_photo_and_location(photo_id):
 
     lat = location_details['lat']
     lng = location_details['lng']
-    name = location_details['name']
+    # name = location_details['name']
 
-    city_id = get_city(name).city_id
+    # city_id = get_city(name).city_id
 
-    session['city_id'] = city_id
+    # session['city_id'] = city_id
 
     address = get_address_by_lat_lng(lat, lng)
 
-    saved = is_saved(photo_id)
+    # saved = is_saved(photo_id)
 
     return render_template("photo-details.html",
                            img_src=img_src,
@@ -167,7 +176,7 @@ def show_photo_and_location(photo_id):
                            lng=lng,
                            address=address,
                            google_maps_api_key=google_maps_api_key,
-                           saved=saved)
+                           )
 
 
 @app.route('/save-photo', methods=["POST"])

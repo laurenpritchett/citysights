@@ -192,8 +192,9 @@ if __name__ == "__main__":
     app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
 
     connect_to_db(app)
+    DEBUG = "NO_DEBUG" not in os.environ
 
     # Use the DebugToolbar
     # DebugToolbarExtension(app)
     PORT = int(os.environ.get("PORT", 5000))
-    app.run(port=PORT, host='0.0.0.0')
+    app.run(port=PORT, host='0.0.0.0', debug=DEBUG)

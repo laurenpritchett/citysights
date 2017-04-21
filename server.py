@@ -188,10 +188,10 @@ def remove_photo():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
-    app.debug = True
+    app.debug = False
     app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
 
-    connect_to_db(app)
+    connect_to_db(app, os.environ.get("DATABASE_URL"))
     DEBUG = "NO_DEBUG" not in os.environ
 
     # Use the DebugToolbar

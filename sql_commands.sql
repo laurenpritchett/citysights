@@ -6,8 +6,15 @@ CREATE TABLE users(
 	password VARCHAR(64), NOT NULL
 	);
 
+CREATE TABLE photos(
+	photo_id VARCHAR(200) PRIMARY KEY,
+	img_src VARCHAR(200) NOT NULL
+	);
+
 CREATE TABLE users_photos(
 	users_photos_id SERIAL PRIMARY KEY,
-	user_id 
-	photo_id
+	user_id INTEGER
+		REFERENCES users,
+	photo_id VARCHAR(200)
+		REFERENCES photos
 	);

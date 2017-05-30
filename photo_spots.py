@@ -85,8 +85,6 @@ def register_user(user_info):
 def save_photo_spot(img_src, photo_id, user_id):
     """Save photo to database."""
 
-    # city_id = session['city_id']
-
     new_user_photo = UserPhoto(user_id=user_id, photo_id=photo_id)
 
     if not Photo.query.filter(Photo.photo_id == photo_id).all():

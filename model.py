@@ -24,6 +24,8 @@ class User(db.Model):
 
     @classmethod
     def by_id(cls, user_id):
+        """Get user by id."""
+
         return cls.query.filter_by(user_id=user_id).first()
 
 
@@ -62,6 +64,8 @@ class Photo(db.Model):
 
     @classmethod
     def by_id(cls, photo_id):
+        """Get photo by id."""
+
         return cls.query.filter_by(photo_id=photo_id).first()
 
 ################################################################################

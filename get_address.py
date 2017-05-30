@@ -19,7 +19,7 @@ def get_address_by_lat_lng(lat, lng):
     reverse_geocode_result = gmaps.reverse_geocode((lat, lng))
 
     # Return formatted address
-    # Looks like u'Coastal Trail, San Francisco, CA 94129, USA'
+    # Format: u'Coastal Trail, San Francisco, CA 94129, USA'
 
     return reverse_geocode_result[0]['formatted_address']
 
